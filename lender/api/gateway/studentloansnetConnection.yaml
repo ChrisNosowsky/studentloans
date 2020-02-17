@@ -24,7 +24,7 @@ description: "A gateway connection file for the StudentLoansNet networks"
 #
 # Schema version of the content. Used by the SDK to apply the corresponding parsing rules.
 #
-version: "1.0"
+version: "2.0"
 
 #
 # The client section is SDK-specific. The sample below is for the node.js SDK

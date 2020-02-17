@@ -1,0 +1,8 @@
+Error cases:
+
+1. If network doesn't start from endorser Error
+-docker rm -vf $(docker ps -a -q)
+-docker rmi -f $(docker images -a -q)
+
+open basic-network/start.sh
+Make FABRIC_START_TIMEOUT = 30 or more
