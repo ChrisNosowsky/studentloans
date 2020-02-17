@@ -14,7 +14,7 @@ set -o pipefail
 # Where am I?
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
 echo $DIR
-cd "/var/www/html/fabric-samples/basic-network/"
+cd "$GOPATH/src/github.com/hyperledger/fabric-samples/basic-network/"
 
 docker kill cliLender cliStudent logspout || true
 ./teardown.sh || true

@@ -1,5 +1,5 @@
 
-const State = require('state.js')
+const State = require('./state.js')
 
 const loanState = {
     ISSUED: 1,

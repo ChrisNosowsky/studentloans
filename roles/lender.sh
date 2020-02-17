@@ -18,7 +18,7 @@ echo "
  Install and Instantiate a Smart Contract in either langauge
  JavaScript Contract:
  docker exec cliLender peer chaincode install -n loancontract -v 0 -p /opt/gopath/src/github.com/contract -l node
- docker exec cliLender peer chaincode instantiate -n loancontract -v 0 -l node -c '{\"Args\":[\"org.studentloans.loan:instantiate\"]}' -C mychannel -P \"AND ('Org1MSP.member')\"
+ docker exec cliLender peer chaincode instantiate -n loancontract -v 0 -l node -c '{\"Args\":[\"org.studentloansnet.loan:instantiate\"]}' -C mychannel -P \"AND ('Org1MSP.member')\"
  Java Contract:
  docker exec cliLender peer chaincode install -n loancontract -v 0 -p /opt/gopath/src/github.com/contract-java -l java
  docker exec cliLender peer chaincode instantiate -n loancontract -v 0 -l java -c '{\"Args\":[\"org.studentloansnet.loan:instantiate\"]}' -C mychannel -P \"AND ('Org1MSP.member')\"

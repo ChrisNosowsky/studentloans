@@ -1,6 +1,6 @@
-const StateList = require('statelist.js');
+const StateList = require('./statelist.js');
 
-const Loan = require(loan.js);
+const Loan = require('./loan.js');
 
 class LoanList extends StateList {
     constructor(ctx) {

@@ -1,7 +1,7 @@
 const {Contract, Context} = require('fabric-contract-api');
 
-const Loan = require('./loan.js.js');
-const LoanList = require('./loanlist.js.js');
+const Loan = require('./loan.js');
+const LoanList = require('./loanList.js');
 
 
 class LoanContext extends Context {
@@ -16,6 +16,7 @@ class LoanContext extends Context {
 class LoanContract extends Contract {
     constructor() {
         super('org.studentloansnet.loan');
+        console.log('in it to win it');
     }
 
     createContext() {

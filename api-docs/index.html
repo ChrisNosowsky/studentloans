@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/code-themes/sl-theme.css">
+        <link rel="stylesheet" href="css/main.css">
+    </head>
+    <body>
+        <div class="navbar navbar-inverse navbar-static-top" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">docs.strongloop.com</a>
+            </div>
+            <div id="modules"></div>
+        </div>
+
+<div class="row">
+  <div class="col-lg-3 column scroll-spy-target">
+    <ul class="nav nav-pills nav-stacked">
+  <div id="versions"></div>
+  
+    <li class="depth-1">
+      <a href="#commercial-paper-tutorial">Commercial Paper Tutorial</a>
+    </li>
+  
+    <li class="depth-2">
+      <a href="#scenario">Scenario</a>
+    </li>
+  
+    <li class="depth-2">
+      <a href="#quick-start">Quick Start</a>
+    </li>
+  
+    <li class="depth-3">
+      <a href="#steps">Steps</a>
+    </li>
+  
+    <li class="depth-2">
+      <a href="#setup">Setup</a>
+    </li>
+  
+    <li class="depth-2">
+      <a href="#running-the-infrastructure">Running the Infrastructure</a>
+    </li>
+  
+    <li class="depth-3">
+      <a href="#install-and-instantiate-the-contract">Install and Instantiate the contract</a>
+    </li>
+  
+    <li class="depth-2">
+      <a href="#client-applications">Client Applications</a>
+    </li>
+  
+    <li class="depth-3">
+      <a href="#issue-the-paper">Issue the paper</a>
+    </li>
+  
+    <li class="depth-3">
+      <a href="#buy-and-redeem-the-paper">Buy and Redeem the paper</a>
+    </li>
+  
+</ul>
+
+  </div>
+  <div class="col-lg-9 col-lg-offset-3 column" data-spy="scroll" data-target=".scroll-spy-target" data-offset="0">
+    <div class="readability">
+      
+        <a name="commercial-paper-tutorial"></a><h1>Commercial Paper Tutorial <small>v1.4.3</small></h1>
+<p>This folder contains the code for an introductory tutorial to Smart Contract development. It is based around the scenario of Commercial Paper.
+The full tutorial, including full scenario details and line by line code walkthroughs is in the <a href="https://hyperledger-fabric.readthedocs.io/en/latest/tutorial/commercial_paper.html">Hyperledger Fabric documentation</a>.</p>
+<a name="scenario"></a><h2>Scenario</h2>
+<p>In this tutorial two organizations, MagnetoCorp and DigiBank, trade commercial paper with each other using PaperNet, a Hyperledger Fabric blockchain network.</p>
+<p>Once you’ve set up a basic network, you’ll act as Isabella, an employee of MagnetoCorp, who will issue a commercial paper on its behalf. You’ll then switch hats to take the role of Balaji, an employee of DigiBank, who will buy this commercial paper, hold it for a period of time, and then redeem it with MagnetoCorp for a small profit.</p>
+<p><img src="https://hyperledger-fabric.readthedocs.io/en/latest/_images/commercial_paper.diagram.1.png" alt=""></p>
+<a name="quick-start"></a><h2>Quick Start</h2>
+<p>You are strongly advised to read the full tutorial to get information about the code and the scenario. Below are the quick start instructions for running the tutorial, but no details on the how or why it works.</p>
+<a name="steps"></a><h3>Steps</h3>
+<p>1) Start the Hyperledger Fabric infrastructure</p>
+<p>   <em>although the scenario has two organizations, the &#39;basic&#39; or &#39;development&#39; Fabric infrastructure will be used</em></p>
+<p>2) Install and Instantiate the Contracts</p>
+<p>3) Run client applications in the roles of MagnetoCorp and Digibank to trade the commercial paper</p>
+<ul>
+<li>Issue the Paper as Magnetocorp</li>
+<li>Buy the paper as DigiBank</li>
+<li>Redeem the paper as DigiBank</li>
+</ul>
+<a name="setup"></a><h2>Setup</h2>
+<p>You will need a machine with the following</p>
+<ul>
+<li>Docker and docker-compose installed</li>
+<li>Node.js v12 if you want to run JavaScript client applications</li>
+<li>Java v8 if you want to run Java client applications</li>
+<li>Maven to build the Java applications</li>
+</ul>
+<p>It is advised to have 3 console windows open; one to monitor the infrastructure and one each for MagnetoCorp and DigiBank</p>
+<p>If you haven&#39;t already clone the repository to a directory of your choice, and change to the <code>commercial-paper</code> directory</p>
+<pre><code>git <span class="hljs-keyword">clone</span> <span class="hljs-title">https</span>://github.com/hyperledger/fabric-samples.git
+cd fabric-samples/commercial-paper</code></pre><p>This <code>README.md</code> file is in the <code>commercial-paper</code> directory, the source code for client applications and the contracts ins in the <code>organization</code> directory, and some helper scripts are in the <code>roles</code> directory.</p>
+<a name="running-the-infrastructure"></a><h2>Running the Infrastructure</h2>
+<p>In one console window, run the <code>./roles/network-starter.sh</code> script; this will start the basic infrastructure and also start monitoring all the docker containers.</p>
+<p>You can cancel this if you wish to reuse the terminal, but it&#39;s best left open.</p>
+<a name="install-and-instantiate-the-contract"></a><h3>Install and Instantiate the contract</h3>
+<p>The contract code is available as either JavaScript or Java. You can use either one, and the choice of contract language does not affect the choice of client language.</p>
+<p>In your &#39;MagnetoCorp&#39; window run the following command</p>
+<p><code>./roles/magnetocorp.sh</code></p>
+<p>This will start a docker container for Fabric CLI commands, and put you in the correct directory for the source code.</p>
+<p><strong>For a JavaScript Contract:</strong></p>
+<pre><code><span class="hljs-string">docker </span><span class="hljs-string">exec </span><span class="hljs-string">cliLender </span><span class="hljs-string">peer </span><span class="hljs-string">lifecycle </span><span class="hljs-string">chaincode </span><span class="hljs-string">package </span><span class="hljs-string">cp.</span><span class="hljs-string">tar.</span><span class="hljs-string">gz </span><span class="hljs-built_in">--lang</span> <span class="hljs-string">node </span><span class="hljs-built_in">--path</span> /<span class="hljs-string">opt/</span><span class="hljs-string">gopath/</span><span class="hljs-string">src/</span><span class="hljs-string">github.</span><span class="hljs-string">com/</span><span class="hljs-string">hyperledger/</span><span class="hljs-string">fabric-samples/</span><span class="hljs-string">studentloans/</span><span class="hljs-string">lender/</span><span class="hljs-string">api </span><span class="hljs-built_in">--label</span> <span class="hljs-string">cp_0
+</span><span class="hljs-string">docker </span><span class="hljs-string">exec </span><span class="hljs-string">cliLender </span><span class="hljs-string">peer </span><span class="hljs-string">lifecycle </span><span class="hljs-string">chaincode </span><span class="hljs-string">install </span><span class="hljs-string">cp.</span><span class="hljs-string">tar.</span><span class="hljs-string">gz
+</span><span class="hljs-string">export </span><span class="hljs-string">PACKAGE_ID=</span>$(<span class="hljs-string">docker </span><span class="hljs-string">exec </span><span class="hljs-string">cliLender </span><span class="hljs-string">peer </span><span class="hljs-string">lifecycle </span><span class="hljs-string">chaincode </span><span class="hljs-string">queryinstalled </span>2&gt;&amp;1 | <span class="hljs-string">awk </span>-F <span class="hljs-string">"[, ]+"</span> <span class="hljs-string">'/Label: /{print $3}'</span>)
+
+<span class="hljs-string">docker </span><span class="hljs-string">exec </span><span class="hljs-string">cliLender </span><span class="hljs-string">peer </span><span class="hljs-string">lifecycle </span><span class="hljs-string">chaincode </span><span class="hljs-string">approveformyorg </span><span class="hljs-built_in">--channelID</span> <span class="hljs-string">mychannel </span><span class="hljs-built_in">--name</span> <span class="hljs-string">loanContract </span>-v 0 <span class="hljs-built_in">--package-id</span> $<span class="hljs-string">PACKAGE_ID </span><span class="hljs-built_in">--sequence</span> 1 <span class="hljs-built_in">--signature-policy</span> <span class="hljs-string">"AND ('Org1MSP.member')"</span> 
+<span class="hljs-string">docker </span><span class="hljs-string">exec </span><span class="hljs-string">cliLender </span><span class="hljs-string">peer </span><span class="hljs-string">lifecycle </span><span class="hljs-string">chaincode </span><span class="hljs-string">commit </span>-o <span class="hljs-string">orderer.</span><span class="hljs-string">example.</span><span class="hljs-string">com:7050 </span><span class="hljs-built_in">--channelID</span> <span class="hljs-string">mychannel </span><span class="hljs-built_in">--name</span> <span class="hljs-string">loanContract </span>-v 0 <span class="hljs-built_in">--sequence</span> 1 <span class="hljs-built_in">--waitForEvent</span> <span class="hljs-built_in">--signature-policy</span> <span class="hljs-string">"AND ('Org1MSP.member')"</span> 
+<span class="hljs-string">docker </span><span class="hljs-string">exec </span><span class="hljs-string">cliLender </span><span class="hljs-string">peer </span><span class="hljs-string">chaincode </span><span class="hljs-string">invoke </span>-o <span class="hljs-string">orderer.</span><span class="hljs-string">example.</span><span class="hljs-string">com:7050 </span><span class="hljs-built_in">--channelID</span> <span class="hljs-string">mychannel </span><span class="hljs-built_in">--name</span> <span class="hljs-string">loanContract </span>-c <span class="hljs-string">'{"Args":["org.studentloansnet.loan:instantiate"]}'</span> <span class="hljs-built_in">--waitForEvent</span>
+</code></pre><p><strong>For a Java Contract:</strong></p>
+<pre><code>pushd .<span class="hljs-regexp">/organization/</span>magnetocorp/contract-java
+
+./gradlew installDist
+
+popd
+
+docker exec cliMagnetoCorp peer chaincode install -n papercontract -v <span class="hljs-number">0</span> -p <span class="hljs-regexp">/opt/</span>gopath<span class="hljs-regexp">/src/</span>github.com<span class="hljs-regexp">/hyperledger/</span>fabric-samples<span class="hljs-regexp">/commercial-paper/</span>organization<span class="hljs-regexp">/magnetocorp/</span>contract-java<span class="hljs-regexp">/build/</span>install/papercontract -l java
+
+docker exec cliMagnetoCorp peer chaincode instantiate -n papercontract -v <span class="hljs-number">0</span> -l java -c <span class="hljs-string">'{"Args":["org.papernet.commercialpaper:instantiate"]}'</span> -C mychannel -P <span class="hljs-string">"AND ('Org1MSP.member')"</span></code></pre><blockquote>
+<p>If you want to try both a Java and JavaScript Contract, then you will need to restart the infrastructure and deploy the other contract.</p>
+</blockquote>
+<p><strong>For a Go Contract:</strong></p>
+<pre><code>docker exec cliMagnetoCorp bash -c '<span class="hljs-keyword">cd</span> <span class="hljs-string">/opt/gopath/src/github.com/hyperledger/fabric-samples/commercial-paper/organization/magnetocorp/contract-go</span> &amp;&amp; go mod vendor'
+
+docker exec cliMagnetoCorp peer lifecycle chaincode package cp.tar.gz <span class="hljs-params">--lang</span> golang <span class="hljs-params">--path</span> github.com/hyperledger/fabric-samples/commercial-paper/organization/magnetocorp/contract-go <span class="hljs-params">--label</span> cp_0
+docker exec cliMagnetoCorp peer lifecycle chaincode install cp.tar.gz
+export PACKAGE_ID=$<span class="hljs-params">(docker exec cliMagnetoCorp peer lifecycle chaincode queryinstalled 2&gt;&amp;1 | awk -F "[, ]+" '/Label: /{print $3}')</span>
+
+docker exec cliMagnetoCorp peer lifecycle chaincode approveformyorg <span class="hljs-params">--channelID</span> mychannel <span class="hljs-params">--name</span> papercontract -v 0 <span class="hljs-params">--package-id</span> $PACKAGE_ID <span class="hljs-params">--sequence</span> 1 <span class="hljs-params">--signature-policy</span> <span class="hljs-string">"AND ('Org1MSP.member')"</span>
+docker exec cliMagnetoCorp peer lifecycle chaincode commit -o orderer.example.com<span class="hljs-function">:7050</span> <span class="hljs-params">--channelID</span> mychannel <span class="hljs-params">--name</span> papercontract -v 0 <span class="hljs-params">--sequence</span> 1 <span class="hljs-params">--waitForEvent</span> <span class="hljs-params">--signature-policy</span> <span class="hljs-string">"AND ('Org1MSP.member')"</span>
+docker exec cliMagnetoCorp peer chaincode invoke -o orderer.example.com<span class="hljs-function">:7050</span> <span class="hljs-params">--channelID</span> mychannel <span class="hljs-params">--name</span> papercontract -c '{<span class="hljs-string">"Args"</span>:[<span class="hljs-string">"org.papernet.commercialpaper:instantiate"</span>]}' <span class="hljs-params">--waitForEvent</span></code></pre><a name="client-applications"></a><h2>Client Applications</h2>
+<p>Note for Java applications you will need to compile the Java Code using maven. Use this command in each application-java directory</p>
+<pre><code>mvn clean <span class="hljs-class"><span class="hljs-keyword">package</span></span></code></pre><p>Note for JavaScript applications you will need to install the dependencies first. Use this command in each application directory</p>
+<pre><code>npm <span class="hljs-keyword">install</span></code></pre><blockquote>
+<p> Note that there is NO dependency between the language of any one client application and any contract. Mix and match as you wish!</p>
+</blockquote>
+<a name="issue-the-paper"></a><h3>Issue the paper</h3>
+<p>This is running as <em>MagnetoCorp</em> so you can stay in the same window. These commands are to be run in the
+<code>commercial-paper/organization/magnetocorp/application</code> directory or the <code>commercial-paper/organization/magnetocorp/application-java</code></p>
+<p><em>Add the Identity to be used</em></p>
+<pre><code><span class="hljs-keyword">node</span> <span class="hljs-title">addToWallet</span>.js
+<span class="hljs-comment"># or</span>
+java -cp target/commercial-paper-<span class="hljs-number">0.0</span>.<span class="hljs-number">1</span>-SNAPSHOT.jar org.magnetocorp.AddToWallet</code></pre><p><em>Issue the Commercial Paper</em></p>
+<pre><code><span class="hljs-keyword">node</span> <span class="hljs-title">issue</span>.js
+<span class="hljs-comment"># or</span>
+java -cp target/commercial-paper-<span class="hljs-number">0.0</span>.<span class="hljs-number">1</span>-SNAPSHOT.jar org.magnetocorp.Issue</code></pre><a name="buy-and-redeem-the-paper"></a><h3>Buy and Redeem the paper</h3>
+<p>This is running as <em>Digibank</em>; you&#39;ve not acted as this organization before so in your &#39;Digibank&#39; window run the following command in the
+<code>fabric-samples/commercial-paper/</code> directory</p>
+<p><code>./roles/digibank.sh</code></p>
+<p>You can now run the applications to buy and redeem the paper. Change to either the
+<code>commercial-paper/organization/digibank/application</code> directory or  <code>commercial-paper/organization/digibank/application-java</code></p>
+<p><em>Add the Identity to be used</em></p>
+<pre><code><span class="hljs-keyword">node</span> <span class="hljs-title">addToWallet</span>.js
+<span class="hljs-comment"># or</span>
+java -cp target/commercial-paper-<span class="hljs-number">0.0</span>.<span class="hljs-number">1</span>-SNAPSHOT.jar org.digibank.AddToWallet</code></pre><p><em>Buy the paper</em></p>
+<pre><code><span class="hljs-keyword">node</span> <span class="hljs-title">buy</span>.js
+<span class="hljs-comment"># or</span>
+java -cp target/commercial-paper-<span class="hljs-number">0.0</span>.<span class="hljs-number">1</span>-SNAPSHOT.jar org.digibank.Buy</code></pre><p><em>Redeem</em></p>
+<pre><code><span class="hljs-keyword">node</span> <span class="hljs-title">redeem</span>.js
+<span class="hljs-comment"># or</span>
+java -cp target/commercial-paper-<span class="hljs-number">0.0</span>.<span class="hljs-number">1</span>-SNAPSHOT.jar org.digibank.Redeem</code></pre>
+      
+    </div>
+    <div class="intentionally-left-blank"></div>
+  </div>
+</div>
+        <script src="js/vendor/jquery-1.10.1.min.js"></script>
+        <script src="js/vendor/jquery.scrollTo-1.4.3.1.js"></script>
+        <script src="js/vendor/bootstrap.min.js"></script>
+        <script src="js/main.js"></script>
+    </body>
+</html>
+

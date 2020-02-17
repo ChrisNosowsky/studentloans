@@ -2,12 +2,12 @@
 const fs = require('fs');
 const yaml = require('js-yaml');
 const {FileSystemWallet, Gateway} = require('fabric-network');
-const Loan = require('./api/loan.js');
+const Loan = require('../loan.js');
 
 
 
 //figure out wallet issue
-
+const wallet = new FileSystemWallet('../../identity/user/isabella/wallet');
 // Main program function
 async function main() {
 
