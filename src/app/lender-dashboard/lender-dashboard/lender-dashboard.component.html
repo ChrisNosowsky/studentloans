@@ -1,0 +1,102 @@
+<div class="container">
+  <app-header></app-header>
+</div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <div class="card card-num-disp">
+          <div class="card-header">
+            Loans Issued
+          </div>
+          <div class="card-body">
+          <h4 class="card-title-num">
+            {{issuedLoans.length}}</h4>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="col">
+        <div class="col-lg-4"></div>  
+        <div class="card">
+          <div class="card-header">
+            Total Loan Amount Outstanding
+          </div>
+          <div class="card-body">
+            <h4 class="card-title">
+              {{15000 | currency}}
+            </h4>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+      <div class="card card-num-disp">
+        <div class="card-header">
+          Test Header
+        </div>
+        <div class="card-body">
+          <div class="card-title-num">Test Content</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="card">
+        <div class="card-header">Test Title</div>
+        <div class="card-body">Test Body</div>
+      </div>
+    </div>
+
+    </div>
+      <div class="row">
+        <div class="col-lg-6 col-md-6">
+          <div class="card tall-card">
+            <div class="card-header">
+              Applications Awaiting Review
+            </div>
+            <div class="card-body d-flex flex-column">
+              <h4 class="card-title">
+                <b>{{loans.length - issuedLoans.length}}</b> totalling
+                <b>{{152000 | currency }}</b>
+              </h4>
+              <a href="showapplications" class="mt-auto btn btn-primary ">View Applications</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-6 col-md-6">
+
+          <div class="card">
+            <div class="card-header">Progress</div>
+            <div class="card-body d-flex flex-column">
+              <div class="h6">Loans Issued</div>
+              <div class="progress">
+                <div class="progress-bar bg-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+            </div>
+          </div>
+          
+
+          <div class="card">
+            <div class="card-header">Test Card Chart</div>
+            <div style="display: block">
+              <canvas mdbChart
+                  [chartType]="chartType"
+                  [datasets]="chartDatasets"
+                  [labels]="chartLabels"
+                  [colors]="chartColors"
+                  [options]="chartOptions"
+                  [legend]="true"
+                  (chartHover)="chartHovered($event)"
+                  (chartClick)="chartClicked($event)">
+              </canvas>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+     
+
+ 

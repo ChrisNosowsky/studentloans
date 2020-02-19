@@ -1,0 +1,65 @@
+<div class="container">
+  <app-header></app-header>
+</div>
+<!-- <div class="container">
+  <form class="text-center border border-light p-5" [formGroup]="loanApplicationForm" (ngSubmit)="onSubmit()" novalidate>
+    <p class="h4">Loan Application Form</p>
+
+    <div formGroupName="personalData" novalidate>
+
+      <input class="form-control mb-4" formControlName="email" /> <input class="form-control mb-4" formControlName="mobile" />
+  
+      <select formControlName="schoolYear">
+        <option *ngFor="let schoolYear of schoolYears" [value] = "schoolYear">
+          {{schoolYear}}
+        </option>
+      </select>
+    </div>  
+    <select formControlName="requestType">
+      <option *ngFor="let requestType of requestTypes" [value]="requestType"> {{requestType}} </option>
+    </select>
+    <input formControlName="text" />
+    <button type="submit" mdbBtn color="primary" mdbWavesEffect
+    [disabled] = "loanApplicationForm.pristine">
+    Save
+  </button>
+  <button class="text-btn" type="reset" (click)="revert()">Clear Values</button>
+  </form>
+</div> -->
+
+<div class="container">
+  <form [formGroup]="loanApplicationForm" (ngSubmit)="onSubmit()" novalidate>
+
+    <div class="row justify-content-center" formGroupName="personalData">
+      <div class="col-5">
+        <div class="md-form input-group mb-2">
+          <input type="text" class="form-control mb-4"  placeholder="Your MSU netID" aria-label="Your MSU netID" formControlName="email" aria-describedby="material-addon2">
+          <div class="input-group-append">
+            <span class="input-group-text md-addon" id="material-addon2">@msu.edu</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row justify-content-center" formGroupName="personalData">
+      <div class="col-5">
+        <div class="md-form input-group mb-2">
+          
+          <input type="text" class="form-control mb-4" placeholder="Phone Number" formControlName="mobile">
+        </div>
+      </div>
+    </div>
+
+    <div class="row justify-content-center" formGroupName="loanData">
+      <div class="col-5">
+        <label class="mdb-main-label">How do you want to be paid?</label>
+          
+          <select class="browser-default  custom-select" formControlName="transferType" label="How do you want to be paid?">
+            <option *ngFor="let transfer of transferTypes" [value]="transfer">{{transfer}}</option>
+          </select> 
+      </div>
+    </div>
+    <br>
+
+  </form>
+</div>
