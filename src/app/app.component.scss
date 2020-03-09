@@ -1,0 +1,10 @@
+div[class^="col"],
+div[class*=" col"] {
+  border: 1px dotted black;
+}
+
+
+
+.btn-primary {
+  background-color: #80a690;
+}

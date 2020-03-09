@@ -1,0 +1,46 @@
+
+
+.card {
+    margin-top: 1em;
+    margin-bottom: 1em;
+    min-height: 10em;
+    box-shadow: 0px 10px 14px #BAB1A2;
+}
+.tall-card {
+    height: 20em;
+    min-width: 30%;
+    font-family: din-2014;
+}
+
+
+
+.card-body {
+    font-family: din-2014, sans-serif;
+    font-weight: 400;
+    font-style: normal;
+
+    font-size: 1.2rem;
+
+    background-color: #FFFCF9;
+
+
+}
+
+
+.card-header {
+    font-family: miller-display, serif;
+
+
+    font-weight: 600;
+
+    font-style: bold;
+
+    font-size: 1.45rem;
+
+    background-color: #F0E5D2;
+}
+
+.bg-success {
+    background-color: #5BC0BE !important;
+}
+

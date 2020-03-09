@@ -1,0 +1,50 @@
+/* You can add global styles to this file, and also import other style files */
+body {
+  background-color: #FFF9F0;
+}
+
+.navbar {
+  background-color: #303FC2;
+}
+
+.table > tbody > tr > td {
+vertical-align: middle;
+}
+
+h1 {
+font-family: miller-display, serif;
+font-weight: 700;
+font-style: normal;
+font-size: 2.4rem;
+color: #013f29;
+}
+
+.btn-primary {
+background-color: #80a690 !important;
+}
+
+p {
+font-family: din-2014, sans-serif;
+font-weight: 300;
+font-style: normal;
+font-size: 1.6rem;
+}
+
+html,
+body,
+header,
+#intro {
+  height: 100%;
+}
+
+#intro {
+  background: url("https://mdbootstrap.com/img/Photos/Horizontal/Nature/full%20page/img%20%283%29.jpg")no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.container {
+  padding: 2rem;
+}
