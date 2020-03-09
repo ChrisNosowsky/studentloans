@@ -1,0 +1,29 @@
+<app-header></app-header>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12"> 
+      <h2 class="mt-5 text-center"><b>Login</b></h2>
+      <br>
+    </div>
+  </div>
+</div>
+
+<div class="col-md-12 col-lg-12 col-xs-12">
+  <form class="formstyle">
+    <div class="form-group">
+      <label>Username</label>
+      <input type="text" name="username" class="form-control">
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" name="password" class="form-control">
+    </div>
+    <button type="submit" class="btn btn-primary">Login</button>
+  </form>
+</div>
+<div class="contianer">
+  <div class="col-md-12 formstyle">
+    <p>New User? Register <a [routerLink]="'/register'">here</a></p>
+  </div>
+</div>

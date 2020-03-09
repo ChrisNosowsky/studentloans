@@ -14,6 +14,8 @@ import { ChartsModule, WavesModule } from 'angular-bootstrap-md';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ApplicationFormComponent } from './application-portal/application-form/application-form.component';
 import {CommonService} from './common.service';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 
 const appRoutes: Routes = [
   {
@@ -36,9 +38,15 @@ const appRoutes: Routes = [
   {
     path:'apply',
     component: ApplicationFormComponent
+  },
+  {
+    path:'login',
+    component: LoginComponent
+  },
+  {
+    path: 'register',
+    component: RegisterComponent
   }
-  
-  
 ];
 
 
@@ -50,7 +58,9 @@ const appRoutes: Routes = [
     HomeComponent,
     LoansComponent,
     LenderDashboardComponent,
-    ApplicationFormComponent
+    ApplicationFormComponent,
+    LoginComponent,
+    RegisterComponent
 
   ],
   imports: [
