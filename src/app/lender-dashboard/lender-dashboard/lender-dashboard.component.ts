@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-
-import { Loan } from '../../loan';
 import { CommonService } from '../../common.service';
 
 @Component({

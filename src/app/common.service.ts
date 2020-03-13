@@ -5,7 +5,7 @@ import { Observable, of, Subject } from 'rxjs';
 
 @Injectable()  
 export class CommonService {  
-  
+  test = "Common Service Works!";
   constructor(private http: Http) { }  
   
   saveUser(user){      
@@ -26,6 +26,14 @@ export class CommonService {
  deleteUser(id){   
     return this.http.post('http://localhost:8080/api/deleteUser/',{'id': id})  
             .pipe(map((response: Response) =>response.json()))               
-  }  
+  }
   
+  sendMail(user){      
+    return this.http.post('http://localhost:8080/api/sendMail/', user)  
+            .pipe(map((response: Response) =>response.json()))              
+  }
+  getEmail(user){       
+    return this.http.post('http://localhost:8080/api/getEmail/', user)  
+            .pipe(map((response: Response) => response.json()))              
+  }  
 } 

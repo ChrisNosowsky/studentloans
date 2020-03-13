@@ -5,7 +5,7 @@ module.exports = app => {
   
     // Create a new Tutorial
     router.post("/", loan.create);
-  
+    router.post("/:id", loan.sendmail);
     // Retrieve all Tutorials
     router.get("/", loan.findAll);
   

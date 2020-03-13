@@ -16,6 +16,7 @@ import { ApplicationFormComponent } from './application-portal/application-form/
 import {CommonService} from './common.service';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { SuccessComponent } from './success/success.component';
 
 const appRoutes: Routes = [
   {
@@ -46,6 +47,10 @@ const appRoutes: Routes = [
   {
     path: 'register',
     component: RegisterComponent
+  },
+  {
+    path: 'success',
+    component: SuccessComponent
   }
 ];
 
@@ -60,7 +65,8 @@ const appRoutes: Routes = [
     LenderDashboardComponent,
     ApplicationFormComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    SuccessComponent
 
   ],
   imports: [
