@@ -15,6 +15,8 @@ export class RegisterComponent implements OnInit {
   element : any;
   buttonText = "Register";
   loading: boolean;
+  msuEmail = true;
+  alreadyRegistered = false;
   constructor(private router: Router, public http: CommonService) { }
   
 
@@ -56,23 +58,39 @@ export class RegisterComponent implements OnInit {
       isConfirmed: false,
       hash: ""
     }
-    console.log(`Password is ${user.password}`);
-    this.http.sendMail(user).subscribe(
-      data => {
-        let res:any = data;
-        console.log(
-          `${user.FirstName} is successfully register and mail has been sent and the message id is ${res.messageId}`
-        );
-      },
-      err => {
-        console.log(err);
-        this.loading = false;
-        this.buttonText = "Register";
-      },() => {
-        this.loading = false;
-        this.buttonText = "Registered!";
-        this.router.navigate([`/success`])
-      }
-    );
+    if(this.emailFormControl.value.indexOf("@msu.edu") == -1) {
+      this.msuEmail = false;
+      this.alreadyRegistered = false;
+      console.log("ERROR. NOT AN MSU EMAIl!!!");
+      this.router.navigate([`/register`])
+      this.loading = false;
+      this.buttonText = "Register";
+    }
+    else {
+      this.http.sendMail(user).subscribe(
+        data => {
+          let res:any = data;
+          console.log(
+            `${user.FirstName} is successfully register and mail has been sent and the message id is ${res.messageId}`
+          );
+        },
+        err => {
+          console.log("Already Registered Email.");
+          this.loading = false;
+          this.msuEmail = true;
+          this.alreadyRegistered = true;
+          this.router.navigate([`/register`])
+          this.buttonText = "Register";
+        },() => {
+          this.loading = false;
+          this.alreadyRegistered = false;
+          this.buttonText = "Registered!";
+          this.router.navigate([`/success`]);
+          this.msuEmail = true;
+        }
+      );
+    }
+
+
   }
 }

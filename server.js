@@ -4,7 +4,7 @@ const cors = require("cors");
 var mongo = require("mongoose"); 
 const nodemailer = require("nodemailer");
 var crypto = require('crypto');
-
+var details = require('../confidential/details');
 var db = mongo.connect("mongodb://localhost:27017/studentloanstest", function(err, response){  
    if(err){ console.log( err); }  
    else{ console.log('Connected to ' + db, ' + ', response); }  
@@ -127,20 +127,32 @@ app.post("/api/SaveUser",function(req,res){
         let rand=Math.floor((Math.random() * 100) + 54);
         let hash = crypto.createHash('md5').update(rand.toString()).digest('hex');
         host=req.get('host');
-        sendMail(user, hash, info => {
-            console.log(`Mail sent. id is ${info.messageId}`);
-        });
-        mod.save(function(err,data){  
-            if(err){  
-               res.send(err);         
+        modelLogin.findOne({UserEmail: user.UserEmail}, function(err,data) {
+            if(err) {
+                console.log("Fatal Error in finding our Email");
+            }
+            else {
+                if (data == null) {
+                    sendMail(user, hash, info => {
+                        console.log(`Mail sent. id is ${info.messageId}`);
+                    });
+                    mod.save(function(err,data){  
+                        if(err){  
+                        res.send(err);         
 
-            }  
-            else{        
-                res.send({data:"Record has been Inserted!!"}); 
-                setHash(data, hash);  
-            }  
-       });
-       
+                        }  
+                        else{        
+                            res.send({data:"Record has been Inserted!!"}); 
+                            setHash(data, hash);  
+                        }  
+                    });
+                }
+                else {
+                    console.log("Email already registered!");
+                    res.send(err);
+                }
+            }
+        })
     })
 
     async function sendMail(user, hash, callback) {
@@ -151,8 +163,8 @@ app.post("/api/SaveUser",function(req,res){
             port: 587,
             secure: false, // true for 465, false for other ports
             auth: {
-            user: "chrisnosowsky@gmail.com",
-            pass: "" //CONFIDENTIAL!!!!!!!!!!!!!!!!!!!!! MAKE SURE YOU NEVER HAVE THIS SET WHEN PUSHING TO GITHUB!!!!!!!!!!!    
+            user: details.email,
+            pass: details.password
             }
         })
     
@@ -231,7 +243,6 @@ app.post("/api/SaveUser",function(req,res){
             })
         })
     }
-
 
 
     async function updateConfirm(result) {
