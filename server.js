@@ -1,21 +1,32 @@
 const express = require("express");
+const session = require("express-session");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 var mongo = require("mongoose"); 
 const nodemailer = require("nodemailer");
 var crypto = require('crypto');
 var details = require('../confidential/details');
+
+mongo.Promise = Promise
 var db = mongo.connect("mongodb://localhost:27017/studentloanstest", function(err, response){  
    if(err){ console.log( err); }  
    else{ console.log('Connected to ' + db, ' + ', response); }  
 });  
 
+
+
+
 const app = express();
+
+app.use(session({
+    secret: 'sadhk21h3hdkjh913ldkjsal',
+    saveUninitialized: true,
+    resave: false
+}))
 app.use(bodyParser());  
 app.use(bodyParser.json({limit:'5mb'}));   
 app.use(bodyParser.urlencoded({extended:true}));  
-app.use(cors({ origin: "*" }));  
-  
+app.use(cors({ credentials: true, origin: "*" }));  
 app.use(function (req, res, next) {        
      res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');    
      res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');    
@@ -23,38 +34,10 @@ app.use(function (req, res, next) {
      res.setHeader('Access-Control-Allow-Credentials', true);       
      next();  
  });  
-  
-
-var Schema = mongo.Schema;  
-  
-var LoanAppSchema = new Schema({      
-    Userid: {type: Number},
-    FirstName: { type: String },
-    LastName: { type: String },
-    LoanAmount: { type: Number },
-    Rate: { type: String },
-    LoanHolder: { type: String },
-    DateIssued: { type: String },
-    Issued: { type: String },   
-},{ versionKey: false });  
-
-var LoginSchema = new Schema({      
-    FirstName: { type: String },
-    MiddleName: { type: String },
-    LastName: { type: String },
-    UserEmail: { type: String },
-    password: {type: String},
-    isConfirmed: { type: Boolean },
-    hash: {type: String}   
-},{ versionKey: false });  
 
 
-
-
-
-  
-var model = mongo.model('openApps', LoanAppSchema, 'openApps');  
-var modelLogin = mongo.model('login', LoginSchema, 'login');  
+const model = require('./src/app/models/openApps')
+const modelLogin = require('./src/app/models/login')
 var host;
 app.post("/api/SaveUser",function(req,res){   
     var mod = new model(req.body); 
@@ -219,14 +202,19 @@ app.post("/api/SaveUser",function(req,res){
         });
 
 
-    app.post("/api/getEmail",function(req,res){  
+    app.post("/api/getEmail", async (req,res) => {  
         modelLogin.findOne({UserEmail: req.body.UserEmail, password: req.body.password, isConfirmed: true},function(err,data){
                     if(err){  
                         res.send(err);  
                     }  
                     else{
-                        console.log(data); 
-                        res.send(data);
+                        console.log(data);
+                        req.session.user =  req.body.UserEmail
+                        req.session.save(() => {
+                            console.log(req.session);
+                            res.send(req.session);
+                        });
+                        
                         }  
                 });  
         })
@@ -259,6 +247,29 @@ app.post("/api/SaveUser",function(req,res){
     }
 
 
+    app.get('/api/isloggedin', (req, res) => {
+       res.json({
+           status: !!req.session.user
+       }) 
+    })
+
+   app.get('/api/data', async (req, res) => {
+
+    const user = await modelLogin.findOne({UserEmail: req.session.user}) 
+    console.log(req.session.user)
+    if(!user) {
+        res.json({
+            status: false,
+            message: 'User gone'
+        })
+        return
+    } 
+    res.json({
+        status: true,
+        email: req.session.user,
+        quote: user.quote
+    })
+   }) 
 
 
 

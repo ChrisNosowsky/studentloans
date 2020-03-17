@@ -24,7 +24,17 @@ export class LoginComponent implements OnInit {
     Validators.minLength(4)
   ]);
 
-  login() {
+  login(event) {
+    event.preventDefault()
+    fetch('http://localhost:4200/api/getEmail', {
+      method: 'post',
+      credentials: 'include',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        "UserEmail": this.emailFormControl.value,
+        "password": this.passwordFormControl.value
+      })
+    })
     let user = {
       UserEmail: this.emailFormControl.value,
       password: Md5.hashStr(`${this.passwordFormControl.value}`),
@@ -40,7 +50,8 @@ export class LoginComponent implements OnInit {
       },() => {
         this.status = true;
         console.log("Successful Login!");
-        this.router.navigate([`/home`]);
+        this.router.navigate([`/`]);
+        this.http.setLoggedIn(true);
       }
     );
   }

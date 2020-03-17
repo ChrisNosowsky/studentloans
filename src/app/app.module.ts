@@ -17,6 +17,10 @@ import {CommonService} from './common.service';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { SuccessComponent } from './success/success.component';
+import { AuthGuard } from './auth.guard';
+import { UserService } from './user.service';
+
+
 
 const appRoutes: Routes = [
   {
@@ -25,16 +29,14 @@ const appRoutes: Routes = [
     component: HomeComponent
   },
   {
-    path: 'home',
-    component: HomeComponent
-  },
-  {
     path: 'loandash',
-    component: LenderDashboardComponent
+    component: LenderDashboardComponent,
+    canActivate: [AuthGuard]
   },
   {
     path:'showapplications',
-    component: LoansComponent
+    component: LoansComponent,
+    canActivate: [AuthGuard]
   },
   {
     path:'apply',
@@ -81,7 +83,7 @@ const appRoutes: Routes = [
     ReactiveFormsModule
     
   ],
-  providers: [CommonService],
+  providers: [CommonService, UserService, AuthGuard],
   bootstrap: [AppComponent],
   schemas: [ NO_ERRORS_SCHEMA ]
 })
