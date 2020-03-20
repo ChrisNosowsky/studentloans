@@ -3,7 +3,7 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12"> 
-      <h2 class="mt-5 text-center"><b>Login</b></h2>
+      <h2 class="mt-5 text-center"><b>{{loginRole}}</b></h2>
       <br>
     </div>
   </div>
@@ -23,7 +23,7 @@
     <button type="submit" [disabled]="emailFormControl.invalid || passwordFormControl.invalid" class="btn btn-primary">Login</button>
   </form>
 </div>
-<div class="contianer">
+<div *ngIf="loginRole === 'Student Login'" class="contianer">
   <div class="col-md-12 formstyle">
     <p>New User? Register <a [routerLink]="'/register'">here</a></p>
   </div>

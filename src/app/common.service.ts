@@ -7,6 +7,7 @@ import { Observable, of, Subject } from 'rxjs';
 export class CommonService {  
   test = "Common Service Works!";
   private loggedInStatus = false
+  private role = ""
 
   constructor(private http: Http) { }  
   
@@ -35,7 +36,7 @@ export class CommonService {
             .pipe(map((response: Response) =>response.json()))              
   }
   getEmail(user){       
-    return this.http.post('http://localhost:8080/api/getEmail/', user)  
+    return this.http.post('http://localhost:8080/api/getEmail/', user, {withCredentials: true})  
             .pipe(map((response: Response) => response.json()))              
   } 
 
@@ -45,6 +46,14 @@ export class CommonService {
 
   get isLoggedIn() {
     return this.loggedInStatus
+  }
+
+  setRole(value: string) {
+    this.role = value
+  }
+
+  getRole() {
+    return this.role
   }
 
 

@@ -10,6 +10,7 @@ var LoginSchema = new Schema({
     password: {type: String},
     isConfirmed: { type: Boolean },
     status: {type: Boolean},
+    role: {type: String},
     hash: {type: String}   
 },{ versionKey: false });  
 

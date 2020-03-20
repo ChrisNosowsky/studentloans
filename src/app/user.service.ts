@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { HttpModule } from '@angular/http';
 import { Observable } from 'rxjs';
 
 interface myData {
   email: string,
   status: boolean,
-  quote: string
+  role: string
 }
 
 interface isLoggedIn {
@@ -15,13 +16,14 @@ interface isLoggedIn {
 interface logoutStatus {
   success: boolean
 }
+
 @Injectable()
 export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  getSomeData() {
-    return this.http.get<myData>('/api/data')
+  getData() {
+    return this.http.get<myData>('/api/data', {withCredentials: true})
   }
 
   isLoggedIn(): Observable<isLoggedIn> {

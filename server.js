@@ -21,12 +21,13 @@ const app = express();
 app.use(session({
     secret: 'sadhk21h3hdkjh913ldkjsal',
     saveUninitialized: true,
-    resave: false
+    resave: true
+
 }))
 app.use(bodyParser());  
 app.use(bodyParser.json({limit:'5mb'}));   
 app.use(bodyParser.urlencoded({extended:true}));  
-app.use(cors({ credentials: true, origin: "*" }));  
+//app.use(cors({ credentials: true, origin: "*" }));  
 app.use(function (req, res, next) {        
      res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');    
      res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');    
@@ -203,16 +204,20 @@ app.post("/api/SaveUser",function(req,res){
 
 
     app.post("/api/getEmail", async (req,res) => {  
-        modelLogin.findOne({UserEmail: req.body.UserEmail, password: req.body.password, isConfirmed: true},function(err,data){
-                    if(err){  
+        modelLogin.findOne({UserEmail: req.body.UserEmail, password: req.body.password, isConfirmed: true, role: req.body.role},function(err,data){
+                    console.log(data)
+                    if(err || data === null){ 
                         res.send(err);  
                     }  
                     else{
                         console.log(data);
                         req.session.user =  req.body.UserEmail
+                        req.session.role = req.body.role
                         req.session.save(() => {
+                            console.log("WHY!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                             console.log(req.session);
                             res.send(req.session);
+                            
                         });
                         
                         }  
@@ -255,21 +260,32 @@ app.post("/api/SaveUser",function(req,res){
 
    app.get('/api/data', async (req, res) => {
 
-    const user = await modelLogin.findOne({UserEmail: req.session.user}) 
-    console.log(req.session.user)
-    if(!user) {
+        const user = await modelLogin.findOne({UserEmail: req.session.user}) 
+        console.log(req.session.user)
+        if(!user) {
+            res.json({
+                status: false,
+                message: 'User gone'
+            })
+            return
+        } 
         res.json({
-            status: false,
-            message: 'User gone'
+            status: true,
+            email: req.session.user,
+            role: req.session.role
         })
-        return
-    } 
-    res.json({
-        status: true,
-        email: req.session.user,
-        quote: user.quote
-    })
    }) 
+
+   app.get('/api/logout', (req, res) => {
+       req.session.user = undefined
+       req.session.role = undefined
+       req.session.save(() => {
+        console.log("Logging out goodbye!");
+        console.log(req.session);
+        res.send(req.session);
+        });
+
+   })
 
 
 

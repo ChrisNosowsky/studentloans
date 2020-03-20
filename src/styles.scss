@@ -1,12 +1,51 @@
 /* You can add global styles to this file, and also import other style files */
 body {
     background-color: #eee;
+    max-width: 1050px;
+    margin: 0 auto;
+    padding: 0 16px;
   }
 
 .navbar {
     background-color: #303FC2;
 }
 
+.navbar-brand {
+  padding-right: 20px;
+}
+
 .table > tbody > tr > td {
   vertical-align: middle;
+}
+
+
+.pull-right {
+  float: right !important;
+}
+
+.navbar-item {
+  padding-right: 20px;
+}
+
+.gap {
+  margin-top: 8rem;
+}
+
+.navbar-start a {
+  color: black;
+  text-decoration: none !important;
+}
+
+.navbar-start a:hover {
+  color: #75b8c4;
+  font-weight: bold;
+}
+
+.smartifi-primary {
+  color: #75b8c4
+}
+
+.navbar-brand:hover {
+  color: #75b8c4 !important;
+  font-weight: bold;
 }

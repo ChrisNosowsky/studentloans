@@ -56,7 +56,8 @@ export class RegisterComponent implements OnInit {
       UserEmail: this.emailFormControl.value,
       password: Md5.hashStr(`${this.passwordFormControl.value}`),
       isConfirmed: false,
-      hash: ""
+      hash: "",
+      role: "STUDENT"
     }
     if(this.emailFormControl.value.indexOf("@msu.edu") == -1) {
       this.msuEmail = false;

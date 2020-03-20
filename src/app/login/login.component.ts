@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from "@angular/forms";
 import { CommonService } from "../common.service";
+import { LoginService } from "../login.service";
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import {Md5} from 'ts-md5/dist/md5';
 @Component({
@@ -10,9 +11,12 @@ import {Md5} from 'ts-md5/dist/md5';
 })
 export class LoginComponent implements OnInit {
   status = true;
-  constructor(private router: Router, public http: CommonService) { }
+  loginRole: string;
+  roleDB: string;
+  constructor(private router: Router, public http: CommonService, public loginService: LoginService) { }
 
   ngOnInit() {
+    this.loginRole = this.loginService.getLoginRole();
   }
   emailFormControl = new FormControl("", [
     Validators.required,
@@ -25,19 +29,19 @@ export class LoginComponent implements OnInit {
   ]);
 
   login(event) {
+
+    if(this.loginRole == "Student Login") {
+      this.roleDB = "STUDENT";
+    }
+    else if(this.loginRole == "Lender Login") {
+      this.roleDB = "LENDER"
+    }
+
     event.preventDefault()
-    fetch('http://localhost:4200/api/getEmail', {
-      method: 'post',
-      credentials: 'include',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({
-        "UserEmail": this.emailFormControl.value,
-        "password": this.passwordFormControl.value
-      })
-    })
     let user = {
       UserEmail: this.emailFormControl.value,
       password: Md5.hashStr(`${this.passwordFormControl.value}`),
+      role: this.roleDB
     }
     console.log(user)
     this.http.getEmail(user).subscribe(
@@ -50,9 +54,14 @@ export class LoginComponent implements OnInit {
       },() => {
         this.status = true;
         console.log("Successful Login!");
+
         this.router.navigate([`/`]);
         this.http.setLoggedIn(true);
+        this.loginService.setLoginRole(this.roleDB);
+
       }
     );
+
+
   }
 }

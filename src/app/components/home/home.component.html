@@ -1,14 +1,25 @@
-<div class="container">
 <app-header></app-header>
+
+
+<div *ngIf="!login" class="pull-right">
+            
+    <a (click) = "role($event)" class="mr-5" [routerLink]="'/login'">Student Login</a>
+    <a (click)="role($event)" [routerLink]="'/login'">Lender Login</a>
 </div>
+<div *ngIf="login" class="pull-right">
+    <a class="mr-5" [routerLink]="'/logout'">Logout</a>
+</div>
+
+
+
 <div class="container">
     <div class="row">
-        <div class="col-md-12">
-            <h2>Home</h2>
+        <div class="col-md-12 text-center mt-5">
+            <h2>Welcome to <span class="smartifi-primary">SmartiFi</span></h2>
+            <p class="lead">A Student Loans Platform</p>
         </div>
-        <div class="col-md-6">
-            <a class="mr-5" [routerLink]="'/login'">Student Login</a>
-            <a [routerLink]="'/login'">Lender Login</a>
+        <div class="col-md-12 text-center gap">
+            <p class="lead">Student? Sign up <a class="smartifi-primary" (click) = "role($event)" [routerLink]="'/register'">here</a></p>
         </div>
     </div>
 </div>

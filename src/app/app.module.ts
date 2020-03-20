@@ -19,6 +19,9 @@ import { RegisterComponent } from './register/register.component';
 import { SuccessComponent } from './success/success.component';
 import { AuthGuard } from './auth.guard';
 import { UserService } from './user.service';
+import { StudentDashboardComponent } from './student-dashboard/student-dashboard.component';
+import { LogoutComponent } from './logout/logout.component';
+import {HttpClientModule} from '@angular/common/http';
 
 
 
@@ -41,6 +44,15 @@ const appRoutes: Routes = [
   {
     path:'apply',
     component: ApplicationFormComponent
+  },
+  {
+    path:'logout',
+    component: LogoutComponent
+  },
+  {
+    path:'studentdash',
+    component: StudentDashboardComponent,
+    canActivate: [AuthGuard]
   },
   {
     path:'login',
@@ -68,7 +80,9 @@ const appRoutes: Routes = [
     ApplicationFormComponent,
     LoginComponent,
     RegisterComponent,
-    SuccessComponent
+    SuccessComponent,
+    StudentDashboardComponent,
+    LogoutComponent
 
   ],
   imports: [
@@ -80,6 +94,7 @@ const appRoutes: Routes = [
     WavesModule,
     FormsModule,
     HttpModule,
+    HttpClientModule,
     ReactiveFormsModule
     
   ],
