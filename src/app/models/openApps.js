@@ -7,10 +7,10 @@ var LoanAppSchema = new Schema({
     Userid: {type: Number},
     FirstName: { type: String },
     LastName: { type: String },
+    PhoneNumber: {type: Number},
     LoanAmount: { type: Number },
     Rate: { type: String },
     LoanHolder: { type: String },
-    DateIssued: { type: String },
     Issued: { type: String },   
 },{ versionKey: false });  
 

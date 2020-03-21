@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { Chart } from 'chart.js';
+import { Chart } from 'chart.js'
 import { ChartsModule, WavesModule } from 'angular-bootstrap-md';
 
 @NgModule({

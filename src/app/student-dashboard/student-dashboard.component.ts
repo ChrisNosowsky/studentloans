@@ -17,9 +17,13 @@ export class StudentDashboardComponent implements OnInit {
 
   ngOnInit() {
     this.user.getData().subscribe(data => {
-      if(data.status) {
+      if(data.status && data.role === 'STUDENT') {
         this.email = data.email
-      } else {
+      } 
+      else if(data.role !== 'STUDENT') {
+        this.router.navigate(['/error'])
+      }
+      else {
         this.router.navigate(['/logout'])
       }
       

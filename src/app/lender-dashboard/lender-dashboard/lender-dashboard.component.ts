@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonService } from '../../common.service';
-
+import { UserService } from '../../user.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-lender-dashboard',
   templateUrl: './lender-dashboard.component.html',
@@ -36,13 +37,26 @@ export class LenderDashboardComponent implements OnInit {
   public chartHovered(e: any): void { }
 
 
-  constructor(private loanService: CommonService) { }
+  constructor(private user: UserService, private loanService: CommonService, private router: Router) { }
 
   loans: any;  
   issuedLoans: any;
+  email: string
   ngOnInit() {    
     this.loanService.GetUser().subscribe(data =>  this.loans = data)
     this.loanService.GetUserIssued().subscribe(data2 =>  this.issuedLoans = data2)
+    this.user.getData().subscribe(data => {
+      if(data.status && data.role === 'LENDER') {
+        this.email = data.email
+      } 
+      else if(data.role !== 'LENDER') {
+        this.router.navigate(['/error'])
+      }
+      else {
+        this.router.navigate(['/logout'])
+      }
+      
+    })
   }
 
 }

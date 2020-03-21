@@ -8,6 +8,7 @@ var LoginSchema = new Schema({
     LastName: { type: String },
     UserEmail: { type: String },
     password: {type: String},
+    organization: {type: String},
     isConfirmed: { type: Boolean },
     status: {type: Boolean},
     role: {type: String},

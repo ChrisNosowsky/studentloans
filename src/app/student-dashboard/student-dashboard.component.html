@@ -1,15 +1,44 @@
 <app-header></app-header>
-<h2>
-  Welcome {{email}},
-</h2>
-
+<section>
 <div class="container">
+  <h2>
+    Welcome {{email}},
+  </h2>
+</div>
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-3">
+      <div class="card">
+        <div class="card-header">
+          Loan Status
+        </div>
+        <div class="card-body">
+        <h4 class="card-title">
+          APPROVED</h4>
+        </div>
+      </div>
+
+    </div>
+    <div class="col-md-3">
+      <div class="card">
+        <div class="card-header">
+          Loan Issued
+        </div>
+        <div class="card-body">
+        <h4 class="card-title">
+          ASMSU Loan</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
   <p>Loan Status: <span style="color: green; font-weight: bold;">APPROVED</span></p>
   <p>Loan Issued: </p>
 
   <p>Next Payment Due Date: </p>
   <p>Amount Due: </p>
-  <p class="lead"><a href="#">Pay Now</a></p>
+  <p class="lead"><a href="https://commerce.cashnet.com/cashneti/selfserve/BrowseCatalog.aspx" target="_blank">Pay Now</a></p>
 </div>
 
 <div class="container gap">
@@ -20,3 +49,4 @@
     <p>[Insert Loan Cards]</p>
   </div>
 </div>
+</section>

@@ -1,17 +1,24 @@
 /* You can add global styles to this file, and also import other style files */
 body {
     background-color: #eee;
-    max-width: 1050px;
-    margin: 0 auto;
-    padding: 0 16px;
+    width: 100%;
+    height: 100%;
   }
 
+section {
+  max-width: 1050px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
 .navbar {
-    background-color: #303FC2;
+    background-color: rgb(134, 134, 134) !important;
+    
 }
 
 .navbar-brand {
-  padding-right: 20px;
+  margin-left: 28rem;
+  padding-right: 80px;
 }
 
 .table > tbody > tr > td {
@@ -20,11 +27,12 @@ body {
 
 
 .pull-right {
-  float: right !important;
+  margin-left: auto;
+  margin-right: 0;
 }
 
 .navbar-item {
-  padding-right: 20px;
+  padding-right: 80px;
 }
 
 .gap {

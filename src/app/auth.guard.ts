@@ -5,12 +5,13 @@ import {CommonService} from './common.service';
 import { Router } from '@angular/router';
 import { map } from 'rxjs/operators'
 import { UserService } from './user.service'
+import { LoginService } from './login.service'
 @Injectable({
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
 
-  constructor(private http: CommonService, private user: UserService, private router: Router) {
+  constructor(private http: CommonService, private user: UserService, private login: LoginService, private router: Router) {
 
   }
 
@@ -26,7 +27,9 @@ export class AuthGuard implements CanActivate {
         this.http.setLoggedIn(true)
         return true
       } else {
-        this.router.navigate(['login'])
+        this.http.setLoggedIn(false)
+        let loginStatus = this.login.getLoginRole()
+        this.router.navigate(['/error'])
         return false
       }
     }))

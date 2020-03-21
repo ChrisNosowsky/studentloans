@@ -6,7 +6,8 @@ import { Observable } from 'rxjs';
 interface myData {
   email: string,
   status: boolean,
-  role: string
+  role: string,
+  isConfirmed: boolean
 }
 
 interface isLoggedIn {

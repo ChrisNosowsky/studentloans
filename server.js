@@ -13,9 +13,6 @@ var db = mongo.connect("mongodb://localhost:27017/studentloanstest", function(er
    else{ console.log('Connected to ' + db, ' + ', response); }  
 });  
 
-
-
-
 const app = express();
 
 app.use(session({
@@ -39,6 +36,9 @@ app.use(function (req, res, next) {
 
 const model = require('./src/app/models/openApps')
 const modelLogin = require('./src/app/models/login')
+const modelStudent = require('./src/app/models/studentdashboard')
+const modelLender = require('./src/app/models/lenderdashboard')
+const modelLoans = require('./src/app/models/loans.js')
 var host;
 app.post("/api/SaveUser",function(req,res){   
     var mod = new model(req.body); 
@@ -69,75 +69,75 @@ app.post("/api/SaveUser",function(req,res){
    }  
     })  
      
-    app.post("/api/deleteUser",function(req,res){     
-       model.remove({ _id: req.body.id }, function(err) {    
-        if(err){    
-            res.send(err);    
+app.post("/api/deleteUser",function(req,res){     
+    model.remove({ _id: req.body.id }, function(err) {    
+    if(err){    
+        res.send(err);    
+    }    
+    else{      
+            res.send({data:"Record has been Deleted..!!"});               
         }    
-        else{      
-               res.send({data:"Record has been Deleted..!!"});               
-           }    
-    });    
-      })  
+});    
+    })  
      
      
      
-    app.get("/api/getUser",function(req,res){  
-       model.find({},function(err,data){  
-                 if(err){  
-                     res.send(err);  
-                 }  
-                 else{                
-                     res.send(data);  
-                     }  
-             });  
-     })  
+app.get("/api/getUser",function(req,res){  
+    model.find({},function(err,data){  
+                if(err){  
+                    res.send(err);  
+                }  
+                else{                
+                    res.send(data);  
+                    }  
+            });  
+    })  
     
-     app.get("/api/getUserIssued",function(req,res){  
-        model.find({Issued: "true"},function(err,data2){  
-                  if(err){  
-                      res.send(err);  
-                  }  
-                  else{                
-                      res.send(data2);  
-                      }  
-              });  
-      })  
+app.get("/api/getUserIssued",function(req,res){  
+    model.find({Issued: "true"},function(err,data2){  
+                if(err){  
+                    res.send(err);  
+                }  
+                else{                
+                    res.send(data2);  
+                    }  
+            });  
+})  
 
-    app.post("/api/sendmail", (req, res) => {
-        var mod = new modelLogin(req.body);
-        console.log("request came");
-        let user = req.body;
-        let rand=Math.floor((Math.random() * 100) + 54);
-        let hash = crypto.createHash('md5').update(rand.toString()).digest('hex');
-        host=req.get('host');
-        modelLogin.findOne({UserEmail: user.UserEmail}, function(err,data) {
-            if(err) {
-                console.log("Fatal Error in finding our Email");
+app.post("/api/sendmail", (req, res) => {
+    var mod = new modelLogin(req.body);
+    console.log("request came");
+    let user = req.body;
+    let rand=Math.floor((Math.random() * 100) + 54);
+    let hash = crypto.createHash('md5').update(rand.toString()).digest('hex');
+    host=req.get('host');
+    modelLogin.findOne({UserEmail: user.UserEmail}, function(err,data) {
+        if(err) {
+            console.log("Fatal Error in finding our Email");
+        }
+        else {
+            if (data == null) {
+                sendMail(user, hash, info => {
+                    console.log(`Mail sent. id is ${info.messageId}`);
+                });
+                mod.save(function(err,data){  
+                    if(err){  
+                    res.send(err);         
+
+                    }  
+                    else{        
+                        res.send({data:"Record has been Inserted!!"}); 
+                        setHash(data, hash);  
+                    }  
+                });
             }
             else {
-                if (data == null) {
-                    sendMail(user, hash, info => {
-                        console.log(`Mail sent. id is ${info.messageId}`);
-                    });
-                    mod.save(function(err,data){  
-                        if(err){  
-                        res.send(err);         
-
-                        }  
-                        else{        
-                            res.send({data:"Record has been Inserted!!"}); 
-                            setHash(data, hash);  
-                        }  
-                    });
-                }
-                else {
-                    console.log("Email already registered!");
-                    res.send(err);
-                }
+                console.log("Email already registered!");
+                res.send(err);
             }
-        })
+        }
     })
+})
 
     async function sendMail(user, hash, callback) {
         let link="http://"+host+"/verify?id="+hash; // let means one time click and done.
@@ -213,8 +213,8 @@ app.post("/api/SaveUser",function(req,res){
                         console.log(data);
                         req.session.user =  req.body.UserEmail
                         req.session.role = req.body.role
+                        req.session.isConfirmed = req.body.isConfirmed
                         req.session.save(() => {
-                            console.log("WHY!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                             console.log(req.session);
                             res.send(req.session);
                             
@@ -265,20 +265,22 @@ app.post("/api/SaveUser",function(req,res){
         if(!user) {
             res.json({
                 status: false,
-                message: 'User gone'
+                message: 'User not logged in or does not exist'
             })
             return
         } 
         res.json({
             status: true,
             email: req.session.user,
-            role: req.session.role
+            role: req.session.role,
+            isConfirmed: req.session.isConfirmed
         })
    }) 
 
    app.get('/api/logout', (req, res) => {
        req.session.user = undefined
        req.session.role = undefined
+       req.session.isConfirmed = undefined
        req.session.save(() => {
         console.log("Logging out goodbye!");
         console.log(req.session);
@@ -286,6 +288,27 @@ app.post("/api/SaveUser",function(req,res){
         });
 
    })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

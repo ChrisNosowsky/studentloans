@@ -22,6 +22,7 @@ import { UserService } from './user.service';
 import { StudentDashboardComponent } from './student-dashboard/student-dashboard.component';
 import { LogoutComponent } from './logout/logout.component';
 import {HttpClientModule} from '@angular/common/http';
+import { ErrorComponent } from './error/error.component';
 
 
 
@@ -65,6 +66,10 @@ const appRoutes: Routes = [
   {
     path: 'success',
     component: SuccessComponent
+  },
+  {
+    path: 'error',
+    component: ErrorComponent
   }
 ];
 
@@ -82,7 +87,8 @@ const appRoutes: Routes = [
     RegisterComponent,
     SuccessComponent,
     StudentDashboardComponent,
-    LogoutComponent
+    LogoutComponent,
+    ErrorComponent
 
   ],
   imports: [
