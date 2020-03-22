@@ -1,7 +1,10 @@
 <app-header></app-header>
 <section>
 <div class="container">
-  <form [formGroup]="loanApplicationForm" (ngSubmit)="onSubmit()" novalidate>
+  <div *ngIf = "submitted" class="row">
+    <app-success></app-success>
+  </div>
+  <form *ngIf = "!submitted" [formGroup]="loanApplicationForm" (submit)="onSubmit()" novalidate>
 
     <div class="row justify-content-center" formGroupName="personalData">
       <div class="col-5">
@@ -28,12 +31,12 @@
         <label class="mdb-main-label">Which loan are you applying for?</label>
         
           
-          <select class="browser-default  custom-select" formControlName="transferType" label="How do you want to be paid?">
-            <option *ngFor="let transfer of transferTypes" [value]="transfer">{{transfer}}</option>
+          <select class="browser-default  custom-select">
+            <option *ngFor="let loan of loans">{{loan.LoanName}}</option>
           </select> 
       </div>
     </div>
-    <div class="row justify-content-center mt-4">
+    <div class="row justify-content-center mt-4" formGroupName="loanData">
       <div class="col-5">
         <label class="mdb-main-label">How do you want to be paid?</label>
         <select class="browser-default  custom-select" formControlName="transferType">
@@ -42,7 +45,7 @@
       </div>
     </div>
     <div class="row justify-content-center mt-5">
-      <button class="btn btn-primary">Submit Application</button>
+      <button type="submit" class="btn btn-primary">Submit Application</button>
     </div>
     <br>
   </form>

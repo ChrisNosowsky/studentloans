@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { LoanData, PersonalData, LoanApplication } from 'src/app/application-portal/models/loan-application';
+import { UserService } from '../../user.service';
+import { CommonService } from '../../common.service';
 
 @Component({
   selector: 'app-application-form',
@@ -11,7 +13,7 @@ import { LoanData, PersonalData, LoanApplication } from 'src/app/application-por
 export class ApplicationFormComponent implements OnInit {
   loanApplicationForm: FormGroup
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder, private user: UserService, private http: CommonService) {
     this.loanApplicationForm = this.createFormGroup();
    }
 
@@ -41,12 +43,15 @@ export class ApplicationFormComponent implements OnInit {
     });
   }
 
-  schoolYears = ['Freshman', 'Sophomore', 'Junior', 'Senior', 'Fifth Year']
-  requestTypes = ['Loan1', 'Loan2']
-  transferTypes = ['Cash', 'Venmo', 'Direct Transfer To Your Bank Account']
-  
 
+
+  transferTypes = ['Cash', 'Venmo', 'Direct Transfer To Your Bank Account']
+  submitted = false
+  loans: any
   ngOnInit() {
+    this.http.GetLoans().subscribe(data => {
+      this.loans = data
+    })
   }
 
   revert() {
@@ -60,12 +65,30 @@ export class ApplicationFormComponent implements OnInit {
 
 
   onSubmit() {
+    this.submitted = true
     const result: LoanApplication = Object.assign({},
       this.loanApplicationForm.value);
     result.personalData= Object.assign({},
       result.personalData);
 
-      console.log(result);
+      console.log(result.personalData.mobile.valueOf());
+
+    let openAppsModel = {
+      UserEmail: result.personalData.email.valueOf(),
+      FirstName: "",
+      LastName: "",
+      PhoneNumber: result.personalData.mobile.valueOf(),
+      LoanAmount: 0,
+      Rate: 0,
+      LoanHolder: "",
+      PaymentMethod: result.loanData.transferType.valueOf(),
+      Issued: false,
+    }
+
+    //this.http.SaveApp()
+
+
+
   }
 
 }

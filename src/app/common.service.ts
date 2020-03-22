@@ -15,9 +15,23 @@ export class CommonService {
     return this.http.post('http://localhost:8080/api/SaveUser/', user)  
             .pipe(map((response: Response) =>response.json()))              
   }  
+
+  SaveApp(user){      
+    return this.http.post('http://localhost:8080/api/SaveApp/', user)  
+            .pipe(map((response: Response) =>response.json()))              
+  }  
+
+  CreateStudentDash(user){      
+    return this.http.post('http://localhost:8080/api/CreateStudentDash/', user)  
+            .pipe(map((response: Response) =>response.json()))              
+  }  
   
   GetUser(){       
     return this.http.get('http://localhost:8080/api/getUser/')  
+            .pipe(map((response: Response) => response.json()))              
+  }  
+  GetLoans(){       
+    return this.http.get('http://localhost:8080/api/getLoans/')  
             .pipe(map((response: Response) => response.json()))              
   }  
 
@@ -39,7 +53,10 @@ export class CommonService {
     return this.http.post('http://localhost:8080/api/getEmail/', user, {withCredentials: true})  
             .pipe(map((response: Response) => response.json()))              
   } 
-
+  getOrgOpenApps(user){       
+    return this.http.get('http://localhost:8080/api/getOrgOpenApps/', user)  
+            .pipe(map((response: Response) => response.json()))              
+  } 
   setLoggedIn(value: boolean) {
     this.loggedInStatus = value
   }

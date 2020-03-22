@@ -7,7 +7,8 @@ interface myData {
   email: string,
   status: boolean,
   role: string,
-  isConfirmed: boolean
+  isConfirmed: boolean,
+  organization: string
 }
 
 interface isLoggedIn {

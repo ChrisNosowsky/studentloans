@@ -9,7 +9,7 @@ var StudentDashboardSchema = new Schema({
     LoanStatus: { type: String },
     LoanIssued: {type: String},
     NextPayment: {type: String},
-    AmountDue: {type: String},
+    AmountDue: {type: Number},
     isPaid: {type: Boolean},
     isLate: {type: Boolean}
 

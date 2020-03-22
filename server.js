@@ -81,7 +81,29 @@ app.post("/api/deleteUser",function(req,res){
     })  
      
      
-     
+
+app.post("/api/SaveApp", function(req,res) {
+    var mod = new model(req.body)
+    mod.save(function(err,data){
+        if(err) {
+            res.send(err);
+        } else {
+            res.send(data);
+        }
+    });
+})
+
+app.post("/api/CreateStudentDash", function(req,res) {
+    var mod = new modelStudent(req.body)
+    mod.save(function(err,data){
+        if(err) {
+            res.send(err);
+        } else {
+            res.send(data);
+        }
+    });
+})
+
 app.get("/api/getUser",function(req,res){  
     model.find({},function(err,data){  
                 if(err){  
@@ -92,6 +114,18 @@ app.get("/api/getUser",function(req,res){
                     }  
             });  
     })  
+
+
+app.get("/api/getLoans",function(req,res){  
+    modelLoans.find({},function(err,data){  
+                if(err){  
+                    res.send(err);  
+                }  
+                else{                
+                    res.send(data);  
+                    }  
+            });  
+    }) 
     
 app.get("/api/getUserIssued",function(req,res){  
     model.find({Issued: "true"},function(err,data2){  
@@ -203,6 +237,17 @@ app.post("/api/sendmail", (req, res) => {
         });
 
 
+    app.get("/api/getOrgOpenApps", async (req, res) => {
+        model.find({organization: req.body.organization}, function(err,data) {
+            if(err) {
+                res.send(err)
+            } else {
+                console.log("Org found")
+                res.send(data)
+            }
+        })
+    })
+
     app.post("/api/getEmail", async (req,res) => {  
         modelLogin.findOne({UserEmail: req.body.UserEmail, password: req.body.password, isConfirmed: true, role: req.body.role},function(err,data){
                     console.log(data)
@@ -213,7 +258,8 @@ app.post("/api/sendmail", (req, res) => {
                         console.log(data);
                         req.session.user =  req.body.UserEmail
                         req.session.role = req.body.role
-                        req.session.isConfirmed = req.body.isConfirmed
+                        req.session.isConfirmed = true
+                        req.session.organization = data.organization
                         req.session.save(() => {
                             console.log(req.session);
                             res.send(req.session);
@@ -261,7 +307,6 @@ app.post("/api/sendmail", (req, res) => {
    app.get('/api/data', async (req, res) => {
 
         const user = await modelLogin.findOne({UserEmail: req.session.user}) 
-        console.log(req.session.user)
         if(!user) {
             res.json({
                 status: false,
@@ -273,7 +318,8 @@ app.post("/api/sendmail", (req, res) => {
             status: true,
             email: req.session.user,
             role: req.session.role,
-            isConfirmed: req.session.isConfirmed
+            isConfirmed: req.session.email,
+            organization: req.session.organization
         })
    }) 
 

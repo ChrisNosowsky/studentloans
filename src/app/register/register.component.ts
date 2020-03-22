@@ -57,7 +57,19 @@ export class RegisterComponent implements OnInit {
       password: Md5.hashStr(`${this.passwordFormControl.value}`),
       isConfirmed: false,
       hash: "",
+      organization: "",
       role: "STUDENT"
+    }
+    let dash = {
+      UserEmail: this.emailFormControl.value,
+      FirstName: this.firstNameFormControl.value,
+      LastName: this.lastNameFormControl.value,
+      LoanStatus: "",
+      LoanIssued: "",
+      NextPayment: "",
+      AmountDue: 0,
+      isPaid: false,
+      isLate: false
     }
     if(this.emailFormControl.value.indexOf("@msu.edu") == -1) {
       this.msuEmail = false;
@@ -68,6 +80,16 @@ export class RegisterComponent implements OnInit {
       this.buttonText = "Register";
     }
     else {
+      this.http.CreateStudentDash(dash).subscribe(
+        data => {
+          let res:any = data;
+          console.log("Dashboard for Student Created!");
+        },
+        err => {
+          console.log("Dashboard not created.");
+        }
+      );
+
       this.http.sendMail(user).subscribe(
         data => {
           let res:any = data;

@@ -4,6 +4,7 @@ var Schema = mongo.Schema;
 
 var LoanSchema = new Schema({      
     organization: {type: String},
+    LoanName: {type: String},
     LoanAmount: {type: Number},
     LoanID: {type: Number},
     LoanInterest: {type: Number},
