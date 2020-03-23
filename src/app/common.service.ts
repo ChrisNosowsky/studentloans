@@ -26,17 +26,30 @@ export class CommonService {
             .pipe(map((response: Response) =>response.json()))              
   }  
   
-  GetUser(){       
-    return this.http.get('http://localhost:8080/api/getUser/')  
+  GetUser(org){       
+    return this.http.post('http://localhost:8080/api/getUser/', org)  
             .pipe(map((response: Response) => response.json()))              
-  }  
+  }
+  GetStudentDashboard(user){       
+    return this.http.post('http://localhost:8080/api/getStudentDashboard/', user)  
+            .pipe(map((response: Response) => response.json()))              
+  }   
+
+  UpdateStudentDashboard(user){       
+    return this.http.post('http://localhost:8080/api/UpdateStudentDashboard/', user)  
+            .pipe(map((response: Response) => response.json()))              
+  }   
+
   GetLoans(){       
     return this.http.get('http://localhost:8080/api/getLoans/')  
             .pipe(map((response: Response) => response.json()))              
   }  
-
-  GetUserIssued(){       
-    return this.http.get('http://localhost:8080/api/getUserIssued/')  
+  FindLoan(user){       
+    return this.http.post('http://localhost:8080/api/findLoan/', user)  
+            .pipe(map((response: Response) => response.json()))              
+  }  
+  GetUserIssued(org){       
+    return this.http.post('http://localhost:8080/api/getUserIssued/', org)  
             .pipe(map((response: Response) => response.json()))              
   } 
 
@@ -54,7 +67,7 @@ export class CommonService {
             .pipe(map((response: Response) => response.json()))              
   } 
   getOrgOpenApps(user){       
-    return this.http.get('http://localhost:8080/api/getOrgOpenApps/', user)  
+    return this.http.post('http://localhost:8080/api/getOrgOpenApps/', user)  
             .pipe(map((response: Response) => response.json()))              
   } 
   setLoggedIn(value: boolean) {

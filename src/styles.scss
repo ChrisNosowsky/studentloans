@@ -30,6 +30,18 @@ section {
   margin-left: auto;
   margin-right: 0;
 }
+.tooltip-target { position: relative; }
+
+.tooltip-content { 
+     display: none; 
+     position: absolute;
+     left: 50%;
+     top: 0px; // set this whatever you want
+}
+
+.tooltip-target:hover .tooltip-content {
+    display: block;
+}
 
 .navbar-item {
   padding-right: 80px;

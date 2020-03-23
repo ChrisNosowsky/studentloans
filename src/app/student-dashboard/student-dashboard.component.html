@@ -14,7 +14,7 @@
         </div>
         <div class="card-body">
         <h4 class="card-title">
-          APPROVED</h4>
+          {{LoanStatus}}</h4>
         </div>
       </div>
 
@@ -26,18 +26,15 @@
         </div>
         <div class="card-body">
         <h4 class="card-title">
-          ASMSU Loan</h4>
+          {{LoanIssued}}</h4>
         </div>
       </div>
     </div>
   </div>
 
-
-  <p>Loan Status: <span style="color: green; font-weight: bold;">APPROVED</span></p>
-  <p>Loan Issued: </p>
-
-  <p>Next Payment Due Date: </p>
-  <p>Amount Due: </p>
+  <p>Next Payment Due Date: {{NextPayment}}</p>
+  <p>Amount Due: {{AmountDue}}</p>
+  <p>Payment Status {{isPaid}}</p>
   <p class="lead"><a href="https://commerce.cashnet.com/cashneti/selfserve/BrowseCatalog.aspx" target="_blank">Pay Now</a></p>
 </div>
 

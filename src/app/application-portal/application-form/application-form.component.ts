@@ -48,44 +48,76 @@ export class ApplicationFormComponent implements OnInit {
   transferTypes = ['Cash', 'Venmo', 'Direct Transfer To Your Bank Account']
   submitted = false
   loans: any
+  FirstName: string
+  LastName: string
   ngOnInit() {
     this.http.GetLoans().subscribe(data => {
       this.loans = data
+    })
+    this.user.getData().subscribe(data => {
+      this.FirstName = data.FirstName
+      this.LastName = data.LastName
     })
   }
 
   revert() {
     this.loanApplicationForm.reset();
-
     this.loanApplicationForm.reset({ personalData: new PersonalData(), 
     requestType: '', text: ''});
-
     console.log('Form was cleared')
   }
-
-
-  onSubmit() {
+  onSubmit(selectedLoan) {
+    let selectLoan = {
+      LoanName: selectedLoan
+    }
+    this.http.FindLoan(selectLoan).subscribe(data => {
+      let openAppsModel = {
+        UserEmail: result.personalData.email.valueOf() + "@msu.edu",
+        FirstName: this.FirstName,
+        LastName: this.LastName,
+        PhoneNumber: result.personalData.mobile.valueOf(),
+        LoanAmount: data.LoanAmount,
+        Rate: data.LoanInterest,
+        LoanHolder: data.organization,
+        PaymentMethod: result.loanData.transferType.valueOf(),
+        Issued: false,
+        LoanID: data.LoanID
+      }
+      let UpdateStudentDash = {
+        UserEmail: result.personalData.email.valueOf() + "@msu.edu",
+        LoanStatus: "PENDING",
+        LoanIssued: "",
+        NextPayment: "",
+        AmountDue: 0
+      }
+      this.http.SaveApp(openAppsModel).subscribe(
+        data => {
+          let res:any = data;},
+        err => {
+          console.log(err)
+        },() => {
+          console.log('Saved App!');
+        }
+      );
+      this.http.UpdateStudentDashboard(UpdateStudentDash).subscribe(
+        data => {
+          let res:any = data;},
+        err => {
+          console.log(err)
+        },() => {
+          console.log('Dashboard Updated!');
+        }
+      )
+    })
     this.submitted = true
     const result: LoanApplication = Object.assign({},
       this.loanApplicationForm.value);
     result.personalData= Object.assign({},
       result.personalData);
+    
 
-      console.log(result.personalData.mobile.valueOf());
 
-    let openAppsModel = {
-      UserEmail: result.personalData.email.valueOf(),
-      FirstName: "",
-      LastName: "",
-      PhoneNumber: result.personalData.mobile.valueOf(),
-      LoanAmount: 0,
-      Rate: 0,
-      LoanHolder: "",
-      PaymentMethod: result.loanData.transferType.valueOf(),
-      Issued: false,
-    }
 
-    //this.http.SaveApp()
 
 
 

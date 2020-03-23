@@ -16,10 +16,12 @@ export class LoansComponent implements OnInit {
   ngOnInit() {  
     this.user.getData().subscribe(data => {
       this.organization = data.organization
+      let user = {
+        LoanHolder: this.organization
+      }
+      this.loanService.getOrgOpenApps(user).subscribe(data =>  {this.loans = data})  
+      
     })
-    let user = {
-      organization: this.organization
-    }
-    this.loanService.getOrgOpenApps(user).subscribe(data =>  this.loans = data)  
+
   } 
 }

@@ -4,15 +4,17 @@ var Schema = mongo.Schema;
 
 
 var LoanAppSchema = new Schema({      
-    UserID: {type: Number},
+    UserEmail: {type: String},
     FirstName: { type: String },
     LastName: { type: String },
     PhoneNumber: {type: Number},
     LoanAmount: { type: Number },
-    Rate: { type: String },
+    Rate: { type: Number },
     PaymentMethod: { type: String },
     LoanHolder: { type: String },
-    Issued: { type: String },   
+    Issued: { type: String },
+    LoanHolder: {type: String},
+    LoanID: {type: Number}   
 },{ versionKey: false });  
 
 

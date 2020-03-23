@@ -6,7 +6,7 @@ var mongo = require("mongoose");
 const nodemailer = require("nodemailer");
 var crypto = require('crypto');
 var details = require('../confidential/details');
-
+mongo.set('useFindAndModify', false);
 mongo.Promise = Promise
 var db = mongo.connect("mongodb://localhost:27017/studentloanstest", function(err, response){  
    if(err){ console.log( err); }  
@@ -84,10 +84,12 @@ app.post("/api/deleteUser",function(req,res){
 
 app.post("/api/SaveApp", function(req,res) {
     var mod = new model(req.body)
+    console.log(req.body)
     mod.save(function(err,data){
         if(err) {
             res.send(err);
         } else {
+            console.log("Saved!")
             res.send(data);
         }
     });
@@ -104,8 +106,8 @@ app.post("/api/CreateStudentDash", function(req,res) {
     });
 })
 
-app.get("/api/getUser",function(req,res){  
-    model.find({},function(err,data){  
+app.post("/api/getUser",function(req,res){  
+    model.find({LoanHolder: req.body.LoanHolder},function(err,data){  
                 if(err){  
                     res.send(err);  
                 }  
@@ -126,14 +128,48 @@ app.get("/api/getLoans",function(req,res){
                     }  
             });  
     }) 
+
+app.post("/api/findLoan",function(req,res){  
+    modelLoans.findOne({LoanName: req.body.LoanName},function(err,data){  
+                if(err){  
+                    res.send(err);  
+                }  
+                else{            
+                    res.send(data);  
+                    }  
+            });  
+    }) 
     
-app.get("/api/getUserIssued",function(req,res){  
-    model.find({Issued: "true"},function(err,data2){  
+app.post("/api/getUserIssued",function(req,res){  
+    model.find({LoanHolder: req.body.LoanHolder, Issued: "true"},function(err,data){  
                 if(err){  
                     res.send(err);  
                 }  
                 else{                
-                    res.send(data2);  
+                    res.send(data);  
+                    }  
+            });  
+})  
+
+
+app.post("/api/getStudentDashboard",function(req,res){  
+    modelStudent.findOne({UserEmail: req.body.UserEmail},function(err,data){  
+                if(err){  
+                    res.send(err);  
+                }  
+                else{                
+                    res.send(data);  
+                    }  
+            });  
+})  
+
+app.post("/api/UpdateStudentDashboard",function(req,res){  
+    modelStudent.findOneAndUpdate({UserEmail: req.body.UserEmail}, {LoanStatus: req.body.LoanStatus, LoanIssued: req.body.LoanIssued, NextPayment: req.body.NextPayment, AmountDue: req.body.AmountDue},function(err,data){  
+                if(err){  
+                    res.send(err);  
+                }  
+                else{                
+                    res.send(data);  
                     }  
             });  
 })  
@@ -237,12 +273,12 @@ app.post("/api/sendmail", (req, res) => {
         });
 
 
-    app.get("/api/getOrgOpenApps", async (req, res) => {
-        model.find({organization: req.body.organization}, function(err,data) {
+    app.post("/api/getOrgOpenApps", async (req, res) => {
+        console.log(req.body.LoanHolder)
+        model.find({LoanHolder: req.body.LoanHolder}, function(err,data) {
             if(err) {
                 res.send(err)
             } else {
-                console.log("Org found")
                 res.send(data)
             }
         })
@@ -257,6 +293,8 @@ app.post("/api/sendmail", (req, res) => {
                     else{
                         console.log(data);
                         req.session.user =  req.body.UserEmail
+                        req.session.FirstName = data.FirstName
+                        req.session.LastName = data.LastName
                         req.session.role = req.body.role
                         req.session.isConfirmed = true
                         req.session.organization = data.organization
@@ -317,6 +355,8 @@ app.post("/api/sendmail", (req, res) => {
         res.json({
             status: true,
             email: req.session.user,
+            FirstName: req.session.FirstName,
+            LastName: req.session.LastName,
             role: req.session.role,
             isConfirmed: req.session.email,
             organization: req.session.organization
@@ -325,8 +365,11 @@ app.post("/api/sendmail", (req, res) => {
 
    app.get('/api/logout', (req, res) => {
        req.session.user = undefined
+       req.session.FirstName = undefined
+       req.session.LastName = undefined
        req.session.role = undefined
        req.session.isConfirmed = undefined
+       req.session.organization = undefined
        req.session.save(() => {
         console.log("Logging out goodbye!");
         console.log(req.session);

@@ -5,6 +5,8 @@ import { Observable } from 'rxjs';
 
 interface myData {
   email: string,
+  FirstName: string,
+  LastName: string,
   status: boolean,
   role: string,
   isConfirmed: boolean,

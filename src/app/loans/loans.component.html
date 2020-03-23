@@ -10,7 +10,7 @@
         <th class="th-sm">Last Name</th>
         <th class="th-sm">Loan Amount</th>
         <th class="th-sm">Rate</th>
-        <th class="th-sm">Date Issued</th>
+        <th class="th-sm">Transfer Type</th>
         <th class="th-sm">Issued</th>
         <th class="th-sm">More</th>
       </tr>
@@ -28,6 +28,9 @@
       </td>
       <td *ngIf="loan.Issued === 'false'">
         {{loan.Rate | percent: '1.2-5'}}
+      </td>
+      <td *ngIf="loan.Issued === 'false'">
+        {{loan.PaymentMethod}}
       </td>
       <td *ngIf="loan.Issued === 'false'">
         {{loan.Issued}}

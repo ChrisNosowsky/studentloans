@@ -4,7 +4,7 @@
   <div *ngIf = "submitted" class="row">
     <app-success></app-success>
   </div>
-  <form *ngIf = "!submitted" [formGroup]="loanApplicationForm" (submit)="onSubmit()" novalidate>
+  <form *ngIf = "!submitted" [formGroup]="loanApplicationForm" novalidate>
 
     <div class="row justify-content-center" formGroupName="personalData">
       <div class="col-5">
@@ -31,8 +31,8 @@
         <label class="mdb-main-label">Which loan are you applying for?</label>
         
           
-          <select class="browser-default  custom-select">
-            <option *ngFor="let loan of loans">{{loan.LoanName}}</option>
+          <select name="loan" class="browser-default  custom-select" #selectedLoan>
+            <option *ngFor="let loan of loans" [value]="loan.LoanName">{{loan.LoanName}}</option>
           </select> 
       </div>
     </div>
@@ -45,7 +45,7 @@
       </div>
     </div>
     <div class="row justify-content-center mt-5">
-      <button type="submit" class="btn btn-primary">Submit Application</button>
+      <button type="submit" (click)="onSubmit(selectedLoan.value)" class="btn btn-primary">Submit Application</button>
     </div>
     <br>
   </form>

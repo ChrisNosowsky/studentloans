@@ -11,8 +11,8 @@ export class LenderDashboardComponent implements OnInit {
   public chartType: string = 'line';
   issuedCount = 0;
   public chartDatasets: Array<any> = [
-    { data: [65, 59, 80, 81, 56, 55, 40], label: 'My First dataset' },
-    { data: [28, 48, 40, 19, 86, 27, 90], label: 'My Second dataset' }
+    { data: [65, 59, 80, 81, 56, 55, 40], label: 'Approved' },
+    { data: [2, 8, 0, 5, 12, 3, 7], label: 'Denied' }
   ];
 
   public chartLabels: Array<any> = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
@@ -42,12 +42,36 @@ export class LenderDashboardComponent implements OnInit {
   loans: any;  
   issuedLoans: any;
   email: string
-  ngOnInit() {    
-    this.loanService.GetUser().subscribe(data =>  this.loans = data)
-    this.loanService.GetUserIssued().subscribe(data2 =>  this.issuedLoans = data2)
+  totalIssued = 0
+  totalReview = 0
+  avgInterestIssued:any
+  totalInterest = 0
+  numberIssued = 0
+  numberOpen = 0
+  ngOnInit() {   
     this.user.getData().subscribe(data => {
       if(data.status && data.role === 'LENDER') {
         this.email = data.email
+        let org = {
+          LoanHolder: data.organization
+        }
+        this.loanService.GetUser(org).subscribe(data =>  {
+          this.loans = data
+          var i:number
+          for(i =0; i<this.loans.length; i++) {
+            if(this.loans[i].Issued === "false") {
+              this.totalReview += this.loans[i].LoanAmount
+              this.numberOpen += 1
+            } else {
+              this.totalIssued += this.loans[i].LoanAmount
+              this.totalInterest += this.loans[i].Rate
+              this.numberIssued += 1
+            }
+          }
+          this.avgInterestIssued = this.totalInterest/i
+        })
+        this.loanService.GetUserIssued(org).subscribe(data =>  {this.issuedLoans = data         
+        }) //may not need this
       } 
       else if(data.role !== 'LENDER') {
         this.router.navigate(['/error'])
@@ -56,7 +80,15 @@ export class LenderDashboardComponent implements OnInit {
         this.router.navigate(['/logout'])
       }
       
-    })
+    }) 
+
+
+
+
+
+
+
+
   }
 
 }

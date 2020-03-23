@@ -14,7 +14,7 @@ export class AppComponent {
   Repdata;  
   valbutton ="Save";
   ngOnInit() {    
-    this.newService.GetUser().subscribe(data =>  this.Repdata = data)  
+    
   } 
 
   onSave = function(user,isValid: boolean) {    
