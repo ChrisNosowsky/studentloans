@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { CommonService } from '../common.service';
 
+
 @Component({
   selector: 'app-loans',
   templateUrl: './loans.component.html',

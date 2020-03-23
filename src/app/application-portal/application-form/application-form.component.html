@@ -2,8 +2,9 @@
 <section>
 <div class="container">
   <form [formGroup]="loanApplicationForm" (ngSubmit)="onSubmit()" novalidate>
-
-    <div class="row justify-content-center" formGroupName="personalData">
+<!-- This is a comment to test git push -->
+<!-- Removing email input since we already have their MSU email -->
+    <!-- <div class="row justify-content-center" formGroupName="personalData">
       <div class="col-5">
         <div class="md-form input-group mb-2">
           <input type="text" class="form-control mb-4"  placeholder="Your MSU netID" aria-label="Your MSU netID" formControlName="email" aria-describedby="material-addon2">
@@ -12,7 +13,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <div class="row justify-content-center" formGroupName="personalData">
       <div class="col-5">

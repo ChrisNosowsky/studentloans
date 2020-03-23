@@ -1,0 +1,27 @@
+/* Important part */
+.modal-dialog{
+    overflow-y: initial !important;
+}
+.modal-body{
+    height: 500px;
+    overflow-y: auto;
+}
+
+.modal-header {
+    font-family: miller-display, serif;
+
+
+    font-weight: 600;
+
+    font-style: bold;
+
+    font-size: 1.45rem;
+
+    background-color: #F0E5D2;
+}
+
+.loan-modal {padding: 2rem;}
+
+.btn-primary:active, .btn-primary:focus {
+    background-color: #698876 !important;
+  }

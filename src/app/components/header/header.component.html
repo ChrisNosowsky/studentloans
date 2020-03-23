@@ -1,6 +1,6 @@
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light">
       <a class="navbar-brand" href="#">SmartiFi</a>
-      <div class="navbar-menu">
+      <div class="navbar-menu navbar-light">
         <div class="navbar-start">
           <a class="navbar-item" [routerLink]="'/'">Home </a>
           <a *ngIf="loggedin && role ==='STUDENT'" class="navbar-item" [routerLink]="'/studentdash'"> Dashboard </a>

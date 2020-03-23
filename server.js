@@ -153,7 +153,7 @@ app.post("/api/sendmail", (req, res) => {
         })
     
         let mailOptions = {
-            from: '<chrisnosowsky@gmail.com>', // sender address
+            from: '<parkernolan79@gmail.com>', // sender address
             to: user.UserEmail, // list of receivers
             subject: "Thank you for Registering with SmartiFi", // Subject line
             html: `<h1>Dear ${user.FirstName} ${user.LastName}</h1><br>
@@ -213,7 +213,7 @@ app.post("/api/sendmail", (req, res) => {
                         console.log(data);
                         req.session.user =  req.body.UserEmail
                         req.session.role = req.body.role
-                        req.session.isConfirmed = req.body.isConfirmed
+                        req.session.isConfirmed = true
                         req.session.save(() => {
                             console.log(req.session);
                             res.send(req.session);
@@ -288,28 +288,6 @@ app.post("/api/sendmail", (req, res) => {
         });
 
    })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
    app.listen(8080, function () {  

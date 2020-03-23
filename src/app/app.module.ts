@@ -23,6 +23,7 @@ import { StudentDashboardComponent } from './student-dashboard/student-dashboard
 import { LogoutComponent } from './logout/logout.component';
 import {HttpClientModule} from '@angular/common/http';
 import { ErrorComponent } from './error/error.component';
+import { LoanModal } from './loans/loanmodal/loanmodal.component';
 
 
 
@@ -88,7 +89,8 @@ const appRoutes: Routes = [
     SuccessComponent,
     StudentDashboardComponent,
     LogoutComponent,
-    ErrorComponent
+    ErrorComponent,
+    LoanModal
 
   ],
   imports: [

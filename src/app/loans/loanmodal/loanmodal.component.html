@@ -1,0 +1,44 @@
+<form [formGroup]="loanForm" (ngSubmit)="onSubmit()">
+    <div class="row">
+            <label for="inputHolds">Holds on account?</label>
+            <select class="browser-default custom-select mb-4 form-control" formControlName="noHolds" id="inputHolds" required>
+
+                <option value="1">Yes, there are holds on the account</option>
+                <option value="2">No, there are no holds on the account</option>
+            </select>
+        </div>
+    <div class="row">
+        <label for="inputEnrolled">Are they enrolled full time?</label>
+        <select class="browser-default custom-select mb-4 form-control" formControlName="isEnrolled" id="inputHolds" required>
+
+            <option value="1">Yes, they are enrolled full time</option>
+            <option value="2">No, they are not enrolled full time</option>
+        </select>
+    </div>
+    <div class="row">
+        <label for="inputTaxpayer">Are they an ASMSU/COGS taxpayer?</label>
+        <select class="browser-default custom-select mb-4 form-control" formControlName="isTaxpayer" id="inputHolds" required>
+
+            <option value="1">Yes, they are an ASMSU/COGS taxpayer</option>
+            <option value="2">No, they are not an ASMSU/COGS taxpayer</option>
+        </select>
+    </div>
+    <div class="row">
+        <label for="inputDefaulted">Have they defaulted on an ASMSU loan before?</label>
+        <select class="browser-default custom-select mb-4 form-control" formControlName="hasDefaulted" id="inputDefaulted" required>
+
+            <option value="1">Yes, they have defaulted on an ASMSU loan</option>
+            <option value="2">No, they have not defaulted on an ASMSU loan</option>
+        </select>
+    </div>
+    <div class="row">
+        <label for="inputNotes">Any additional notes:</label>
+        <textarea id="textarea" class="form-control mb-4" formControlName="lenderNotes" placeholder="You can type here"></textarea>
+    </div>
+    <div class="row">
+        <div class="col"><button type="button" class="btn btn-danger" (click)="onReject()">Deny Application</button></div>
+        <div class="col"> <button type="submit" class="btn btn-primary">Approve Application</button></div>
+        
+    </div>
+   
+</form>
