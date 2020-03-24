@@ -23,7 +23,9 @@ import { StudentDashboardComponent } from './student-dashboard/student-dashboard
 import { LogoutComponent } from './logout/logout.component';
 import {HttpClientModule} from '@angular/common/http';
 import { ErrorComponent } from './error/error.component';
-import { LoanmodalComponent } from './loanmodal/loanmodal.component';
+import { LoanModal } from './loans/loanmodal/loanmodal.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { SuccessRegisterComponent } from './success-register/success-register.component';
 
 
 
@@ -69,6 +71,10 @@ const appRoutes: Routes = [
     component: SuccessComponent
   },
   {
+    path: 'success-register',
+    component: SuccessRegisterComponent
+  },
+  {
     path: 'error',
     component: ErrorComponent
   }
@@ -90,8 +96,8 @@ const appRoutes: Routes = [
     StudentDashboardComponent,
     LogoutComponent,
     ErrorComponent,
-    LoanmodalComponent
-
+    LoanModal,
+    SuccessRegisterComponent
   ],
   imports: [
     BrowserModule,
@@ -103,11 +109,12 @@ const appRoutes: Routes = [
     FormsModule,
     HttpModule,
     HttpClientModule,
-    ReactiveFormsModule
-    
+    ReactiveFormsModule,
+    NgbModule
   ],
   providers: [CommonService, UserService, AuthGuard],
   bootstrap: [AppComponent],
+  entryComponents: [ LoanModal ],
   schemas: [ NO_ERRORS_SCHEMA ]
 })
 export class AppModule { }

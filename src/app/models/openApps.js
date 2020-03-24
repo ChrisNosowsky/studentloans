@@ -14,7 +14,8 @@ var LoanAppSchema = new Schema({
     LoanHolder: { type: String },
     Issued: { type: String },
     LoanHolder: {type: String},
-    LoanID: {type: Number}   
+    LoanID: {type: Number},
+    LoanName: {type: String}   
 },{ versionKey: false });  
 
 

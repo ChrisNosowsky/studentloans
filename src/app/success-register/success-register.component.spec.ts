@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LoanmodalComponent } from './loanmodal.component';
+import { SuccessRegisterComponent } from './success-register.component';
 
-describe('LoanmodalComponent', () => {
-  let component: LoanmodalComponent;
-  let fixture: ComponentFixture<LoanmodalComponent>;
+describe('SuccessRegisterComponent', () => {
+  let component: SuccessRegisterComponent;
+  let fixture: ComponentFixture<SuccessRegisterComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LoanmodalComponent ]
+      declarations: [ SuccessRegisterComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LoanmodalComponent);
+    fixture = TestBed.createComponent(SuccessRegisterComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

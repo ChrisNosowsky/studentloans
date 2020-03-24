@@ -3,12 +3,13 @@ const session = require("express-session");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 var mongo = require("mongoose"); 
+const {MongoClient} = require('mongoose')
 const nodemailer = require("nodemailer");
 var crypto = require('crypto');
 var details = require('../confidential/details');
 mongo.set('useFindAndModify', false);
 mongo.Promise = Promise
-var db = mongo.connect("mongodb://localhost:27017/studentloanstest", function(err, response){  
+var db = mongo.connect("mongodb+srv://admin:admin@testcluster-lw1di.mongodb.net/test?authSource=admin&replicaSet=TestCluster-shard-0&readPreference=primary&appname=MongoDB%20Compass%20Community&ssl=true", function(err, response){  
    if(err){ console.log( err); }  
    else{ console.log('Connected to ' + db, ' + ', response); }  
 });  
@@ -154,6 +155,17 @@ app.post("/api/getUserIssued",function(req,res){
 
 app.post("/api/getStudentDashboard",function(req,res){  
     modelStudent.findOne({UserEmail: req.body.UserEmail},function(err,data){  
+                if(err){  
+                    res.send(err);  
+                }  
+                else{                
+                    res.send(data);  
+                    }  
+            });  
+})  
+
+app.post("/api/UpdateOpenAppToIssued",function(req,res){  
+    model.findOneAndUpdate({UserEmail: req.body.UserEmail}, {Issued: req.body.Issued},function(err,data){  
                 if(err){  
                     res.send(err);  
                 }  

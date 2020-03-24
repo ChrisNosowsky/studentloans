@@ -16,7 +16,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let loan of loans">
+    <tr *ngFor="let loan of loans" >
       <td *ngIf="loan.Issued === 'false'">
         {{loan.FirstName}}
       </td>
@@ -36,9 +36,10 @@
         {{loan.Issued}}
       </td>
       <td *ngIf="loan.Issued === 'false'">
-        <button type="button" class="btn btn-indigo btn-m m-0">More</button>
+        <button type="button" class="btn btn-indigo btn-m m-0" (click)="openModal(loan.UserEmail, loan.FirstName, loan.LastName, loan.LoamAmount, loan.Rate, loan.PaymentMethod, loan.Issued)">Verify applicant information</button>
       </td>
     </tr>
+
     </tbody>
   </table>
 </div>

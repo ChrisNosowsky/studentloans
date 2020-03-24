@@ -1,61 +1,48 @@
-@font-face {
-    font-family: 'Charter Regular';
-    src: url('assets/fonts/charter_regular-webfont.eot');
-    src: url('assets/fonts/charter_regular-webfont.woff') format('woff'),
-    url('assets/fonts/charter_regular-webfont.eot') format('embedded-opentype'),
-    url('assets/fonts/charter_regular-webfont.ttf') format('truetype');
-
-    font-weight: normal;
-    font-style: normal;
-}
-
 
 .card {
     margin-top: 1em;
     margin-bottom: 1em;
     min-height: 10em;
+    box-shadow: 0px 10px 14px #BAB1A2;
 }
 .tall-card {
     height: 20em;
     min-width: 30%;
-}
-h4.card-title-num {
-    font-weight: bold;
+    font-family: din-2014;
 }
 
-.bg-blue {
-    background: #4056F4;
-    color: white;
-}
-
-.bg-green {
-    background: #379392;
-    color: white;
-}
-
-.bg-purple {
-    background: #231651;
-    color: white;
-}
+.btn-primary:active:focus {
+    background-color: #698876 !important;
+  }
 
 .card-body {
-    font-family: futura-pt, sans-serif;
-
+    font-family: din-2014, sans-serif;
     font-weight: 400;
-
     font-style: normal;
 
     font-size: 1.2rem;
+
+    background-color: #FFFCF9;
+
+
 }
 
+
 .card-header {
-    font-family: futura-pt, sans-serif;
+    font-family: miller-display, serif;
 
-    font-weight: 700;
 
-    font-style: normal;
+    font-weight: 600;
 
-    font-size: 1.25rem;
+    font-style: bold;
+
+    font-size: 1.45rem;
+
+    background-color: #F0E5D2;
+}
+
+.bg-success {
+    background-color: #5BC0BE !important;
 }
 
 

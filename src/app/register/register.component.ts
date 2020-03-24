@@ -80,15 +80,6 @@ export class RegisterComponent implements OnInit {
       this.buttonText = "Register";
     }
     else {
-      this.http.CreateStudentDash(dash).subscribe(
-        data => {
-          let res:any = data;
-          console.log("Dashboard for Student Created!");
-        },
-        err => {
-          console.log("Dashboard not created.");
-        }
-      );
 
       this.http.sendMail(user).subscribe(
         data => {
@@ -105,10 +96,19 @@ export class RegisterComponent implements OnInit {
           this.router.navigate([`/register`])
           this.buttonText = "Register";
         },() => {
+          this.http.CreateStudentDash(dash).subscribe(
+            data => {
+              let res:any = data;
+              console.log("Dashboard for Student Created!");
+            },
+            err => {
+              console.log("Dashboard not created.");
+            }
+          );
           this.loading = false;
           this.alreadyRegistered = false;
           this.buttonText = "Registered!";
-          this.router.navigate([`/success`]);
+          this.router.navigate([`/success-register`]);
           this.msuEmail = true;
         }
       );

@@ -29,7 +29,6 @@ export class ApplicationFormComponent implements OnInit {
   createFormGroup() {
     return new FormGroup({
       personalData: new FormGroup({
-        email: new FormControl(),
         mobile: new FormControl(),
         schoolYear: new FormControl()
       }),
@@ -50,11 +49,13 @@ export class ApplicationFormComponent implements OnInit {
   loans: any
   FirstName: string
   LastName: string
+  email: string
   ngOnInit() {
     this.http.GetLoans().subscribe(data => {
       this.loans = data
     })
     this.user.getData().subscribe(data => {
+      this.email = data.email
       this.FirstName = data.FirstName
       this.LastName = data.LastName
     })
@@ -72,7 +73,7 @@ export class ApplicationFormComponent implements OnInit {
     }
     this.http.FindLoan(selectLoan).subscribe(data => {
       let openAppsModel = {
-        UserEmail: result.personalData.email.valueOf() + "@msu.edu",
+        UserEmail: this.email,
         FirstName: this.FirstName,
         LastName: this.LastName,
         PhoneNumber: result.personalData.mobile.valueOf(),
@@ -81,12 +82,13 @@ export class ApplicationFormComponent implements OnInit {
         LoanHolder: data.organization,
         PaymentMethod: result.loanData.transferType.valueOf(),
         Issued: false,
-        LoanID: data.LoanID
+        LoanID: data.LoanID,
+        LoanName: data.LoanName
       }
       let UpdateStudentDash = {
-        UserEmail: result.personalData.email.valueOf() + "@msu.edu",
+        UserEmail: this.email,
         LoanStatus: "PENDING",
-        LoanIssued: "",
+        LoanIssued: data.LoanName,
         NextPayment: "",
         AmountDue: 0
       }

@@ -8,20 +8,33 @@
 <div class="container mt-4">
   <div class="row">
     <div class="col-md-3">
-      <div class="card">
+      <div style="height: 10rem;" class="card">
         <div class="card-header">
           Loan Status
         </div>
         <div class="card-body">
         <h4 class="card-title">
-          {{LoanStatus}}</h4>
+          <span [ngClass]="{
+            'color-red': LoanStatus==='REJECTED',
+            'color-green': LoanStatus==='APPROVED',
+            'color-yellow': LoanStatus==='PENDING'
+          }">{{LoanStatus}}</span></h4>
         </div>
       </div>
 
     </div>
     <div class="col-md-3">
-      <div class="card">
-        <div class="card-header">
+      <div style="height: 10rem;" class="card">
+        <div *ngIf="LoanStatus==='PENDING'" class="card-header">
+          Loan on Application
+        </div>
+        <div *ngIf="LoanStatus==='APPROVED'" class="card-header">
+          Loan Issued
+        </div>
+        <div *ngIf="LoanStatus==='REJECTED'" class="card-header">
+          Loan Rejected
+        </div>
+        <div *ngIf="LoanStatus!=='REJECTED' && LoanStatus!=='APPROVED' && LoanStatus!=='PENDING'" class="card-header">
           Loan Issued
         </div>
         <div class="card-body">
@@ -31,19 +44,19 @@
       </div>
     </div>
   </div>
-
-  <p>Next Payment Due Date: {{NextPayment}}</p>
-  <p>Amount Due: {{AmountDue}}</p>
-  <p>Payment Status {{isPaid}}</p>
-  <p class="lead"><a href="https://commerce.cashnet.com/cashneti/selfserve/BrowseCatalog.aspx" target="_blank">Pay Now</a></p>
 </div>
-
+<div *ngIf="LoanStatus==='APPROVED'" class="container">
+  <p><b>Next Payment Due Date:</b> {{NextPayment}}</p>
+  <p><b>Amount Due: </b>{{AmountDue}}</p>
+  <p><b>Payment Status:</b> {{isPaid}}</p>
+  <p class="lead"><a href="https://commerce.cashnet.com/cashneti/selfserve/BrowseCatalog.aspx" target="_blank"><button class="btn btn-primary">Pay Now</button></a></p>
+</div>
 <div class="container gap">
   <h3>Learn More</h3>
 </div>
 <div class="container">
   <div class="col-md-4">
-    <p>[Insert Loan Cards]</p>
+    <p>Coming Soon</p>
   </div>
 </div>
 </section>

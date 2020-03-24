@@ -40,6 +40,12 @@ export class CommonService {
             .pipe(map((response: Response) => response.json()))              
   }   
 
+  
+  UpdateOpenAppToIssued(user){       
+    return this.http.post('http://localhost:8080/api/UpdateOpenAppToIssued/', user)  
+            .pipe(map((response: Response) => response.json()))              
+  }   
+
   GetLoans(){       
     return this.http.get('http://localhost:8080/api/getLoans/')  
             .pipe(map((response: Response) => response.json()))              
