@@ -5,6 +5,7 @@ const cors = require("cors");
 var mongo = require("mongoose"); 
 const {MongoClient} = require('mongoose')
 const nodemailer = require("nodemailer");
+const hbs = require('nodemailer-handlebars');
 var crypto = require('crypto');
 var details = require('../confidential/details');
 mongo.set('useFindAndModify', false);
@@ -13,6 +14,8 @@ var db = mongo.connect("mongodb+srv://admin:admin@testcluster-lw1di.mongodb.net/
    if(err){ console.log( err); }  
    else{ console.log('Connected to ' + db, ' + ', response); }  
 });  
+
+//need SendGrid or MailGun for a Production Application for sending confirmation email
 
 const app = express();
 
@@ -165,25 +168,50 @@ app.post("/api/getStudentDashboard",function(req,res){
 })  
 
 app.post("/api/UpdateOpenAppToIssued",function(req,res){  
-    model.findOneAndUpdate({UserEmail: req.body.UserEmail}, {Issued: req.body.Issued},function(err,data){  
+    if(req.body.LenderPaid) {
+        model.findOneAndUpdate({UserEmail: req.body.UserEmail}, {LenderPaid: req.body.LenderPaid},function(err,data){  
+                    if(err){  
+                        res.send(err);  
+                    }  
+                    else{                
+                        res.send(data);  
+                        }  
+                });
+        } else {
+            model.findOneAndUpdate({UserEmail: req.body.UserEmail}, {Issued: req.body.Issued},function(err,data){  
                 if(err){  
                     res.send(err);  
                 }  
                 else{                
                     res.send(data);  
                     }  
-            });  
+            });
+        }
 })  
 
 app.post("/api/UpdateStudentDashboard",function(req,res){  
-    modelStudent.findOneAndUpdate({UserEmail: req.body.UserEmail}, {LoanStatus: req.body.LoanStatus, LoanIssued: req.body.LoanIssued, NextPayment: req.body.NextPayment, AmountDue: req.body.AmountDue},function(err,data){  
+    if(req.body.LenderPaid) {
+    modelStudent.findOneAndUpdate({UserEmail: req.body.UserEmail}, {LenderPaid: req.body.LenderPaid},function(err,data){  
                 if(err){  
                     res.send(err);  
                 }  
                 else{                
                     res.send(data);  
                     }  
-            });  
+            }); 
+        } else {
+            modelStudent.findOneAndUpdate({UserEmail: req.body.UserEmail}, 
+                {LoanStatus: req.body.LoanStatus, LoanIssued: req.body.LoanIssued, NextPayment: req.body.NextPayment, 
+                    AmountDue: req.body.AmountDue, APID: req.body.APID, DriversLicense: req.body.DriversLicense, 
+                    RemainingBalance: req.body.RemainingBalance},function(err,data){  
+                if(err){  
+                    res.send(err);  
+                }  
+                else{                
+                    res.send(data);  
+                    }  
+            }); 
+        } 
 })  
 
 app.post("/api/sendmail", (req, res) => {
@@ -233,15 +261,24 @@ app.post("/api/sendmail", (req, res) => {
             pass: details.password
             }
         })
-    
+        transporter.use('compile', hbs({
+            viewEngine: {
+                partialsDir:'./src/views/',
+                defaultLayout:""
+            },
+            viewPath: './src/views/',
+            extName:'.hbs'
+        }));
         let mailOptions = {
             from: '<chrisnosowsky@gmail.com>', // sender address
             to: user.UserEmail, // list of receivers
             subject: "Thank you for Registering with SmartiFi", // Subject line
-            html: `<h1>Dear ${user.FirstName} ${user.LastName}</h1><br>
-            <h4>Thank you for joining us</h4>
-            <h4>Please click this link to verify your email.</h4>
-            <a href="${link}">CLICK HERE</a>`
+            template: 'index',
+            context: {
+                FirstName: user.FirstName,
+                LastName: user.LastName,
+                linkSend: link
+            }
         }
         // send mail with defined transport object
         let info = await transporter.sendMail(mailOptions);

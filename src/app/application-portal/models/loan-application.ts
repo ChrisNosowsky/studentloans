@@ -8,7 +8,8 @@ export class LoanApplication {
 export class PersonalData {
     email: string = 'example@msu.edu'
     mobile: string = ''
-    schoolYear: string = ''
+    apid: string = ''
+    license: string = ''
 }
 
 export class LoanData {

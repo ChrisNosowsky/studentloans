@@ -26,6 +26,7 @@ import { ErrorComponent } from './error/error.component';
 import { LoanModal } from './loans/loanmodal/loanmodal.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SuccessRegisterComponent } from './success-register/success-register.component';
+import { PaymentModal } from './loans/payment-modal/payment-modal.component';
 
 
 
@@ -97,7 +98,8 @@ const appRoutes: Routes = [
     LogoutComponent,
     ErrorComponent,
     LoanModal,
-    SuccessRegisterComponent
+    SuccessRegisterComponent,
+    PaymentModal
   ],
   imports: [
     BrowserModule,
@@ -114,7 +116,7 @@ const appRoutes: Routes = [
   ],
   providers: [CommonService, UserService, AuthGuard],
   bootstrap: [AppComponent],
-  entryComponents: [ LoanModal ],
+  entryComponents: [ LoanModal, PaymentModal ],
   schemas: [ NO_ERRORS_SCHEMA ]
 })
 export class AppModule { }

@@ -3,6 +3,7 @@ import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { LoanData, PersonalData, LoanApplication } from 'src/app/application-portal/models/loan-application';
 import { UserService } from '../../user.service';
 import { CommonService } from '../../common.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-application-form',
@@ -13,7 +14,7 @@ import { CommonService } from '../../common.service';
 export class ApplicationFormComponent implements OnInit {
   loanApplicationForm: FormGroup
 
-  constructor(private formBuilder: FormBuilder, private user: UserService, private http: CommonService) {
+  constructor(private router: Router, private formBuilder: FormBuilder, private user: UserService, private http: CommonService) {
     this.loanApplicationForm = this.createFormGroup();
    }
 
@@ -30,7 +31,8 @@ export class ApplicationFormComponent implements OnInit {
     return new FormGroup({
       personalData: new FormGroup({
         mobile: new FormControl(),
-        schoolYear: new FormControl()
+        license: new FormControl(),
+        apid: new FormControl()
       }),
       loanData: new FormGroup({
         loanAmt: new FormControl(),
@@ -50,6 +52,7 @@ export class ApplicationFormComponent implements OnInit {
   FirstName: string
   LastName: string
   email: string
+  alreadyApplied = false
   ngOnInit() {
     this.http.GetLoans().subscribe(data => {
       this.loans = data
@@ -58,7 +61,18 @@ export class ApplicationFormComponent implements OnInit {
       this.email = data.email
       this.FirstName = data.FirstName
       this.LastName = data.LastName
+      let myDash = {
+        UserEmail: this.email
+      }
+      this.http.GetStudentDashboard(myDash).subscribe(data => {
+        if(data.LoanStatus === "PENDING" || data.LoanStatus === "APPROVED") {
+          this.alreadyApplied = true
+        } else {
+          this.alreadyApplied = false
+        }
+      })
     })
+
   }
 
   revert() {
@@ -83,14 +97,21 @@ export class ApplicationFormComponent implements OnInit {
         PaymentMethod: result.loanData.transferType.valueOf(),
         Issued: false,
         LoanID: data.LoanID,
-        LoanName: data.LoanName
+        LoanName: data.LoanName,
+        APID: result.personalData.apid.valueOf(),
+        DriversLicense: result.personalData.license.valueOf(),
+        LenderPaid: false
       }
       let UpdateStudentDash = {
         UserEmail: this.email,
         LoanStatus: "PENDING",
         LoanIssued: data.LoanName,
+        LoanAmount: data.LoanAmount,
         NextPayment: "",
-        AmountDue: 0
+        RemainingBalance: 0,
+        AmountDue: 0,
+        APID: result.personalData.apid.valueOf(),
+        DriversLicense: result.personalData.license.valueOf()
       }
       this.http.SaveApp(openAppsModel).subscribe(
         data => {

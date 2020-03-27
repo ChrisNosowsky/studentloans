@@ -1,0 +1,68 @@
+
+      <div *ngIf="!submitted" class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close pull-right" aria-label="Close" (click)="closeModal()">
+            <span>×</span>
+          </button>
+          <h4 class="modal-title w-100" id="myModalLabel"><b>Confirm Payment to Student</b></h4>
+        </div>
+    
+        <div class="modal-body">
+          <p>Loan Applicant - {{UserData.FirstName}} {{UserData.LastName}}</p>
+          
+        <form [formGroup]="loanForm">
+            <div class="row">
+                  <div class="col-md-5 mt-2">
+                    <label>Confirm Loan Paid Amount Of:</label>
+                  </div>
+                  <div class="col-md-3 mt-2">
+                    <h4>{{UserData.LoanAmount | currency}}</h4>
+                  </div>
+                  <div class="col-md-3 offset-1 custom-control custom-checkbox checkbox-lg">
+                    <input type="checkbox" class="custom-control-input" id="checkbox-1" [formControl]="AmountFormControl" required>
+                    <label class="custom-control-label" for="checkbox-1"></label>
+                  </div>
+            </div>
+            <div class="row">
+              <div class="col-md-5 mt-2">
+                <label>Confirm Transfer Type of:</label>
+              </div>
+              <div class="col-md-3 mt-2">
+                <h4>{{UserData.Transfer}}</h4>
+              </div>
+              <div class="col-md-3 offset-1 custom-control custom-checkbox checkbox-lg">
+                <input type="checkbox" class="custom-control-input" id="checkbox-2" [formControl]="PaymentFormControl" required>
+                <label class="custom-control-label" for="checkbox-2"></label>
+              </div>
+            </div>
+            <div class="row">
+                <div class="col"> <button [disabled]="AmountFormControl.invalid || PaymentFormControl.invalid" type="submit" class="btn btn-primary" (click)="onPay()">Mark as Paid</button></div>
+            </div>
+        
+        </form>
+        </div>
+  </div>
+
+
+  <div *ngIf="submitted" class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close pull-right" aria-label="Close" (click)="closeModalSuccess()">
+        <span>×</span>
+      </button>
+      <h4 class="modal-title w-100" id="myModalLabel"><b>Confirm Payment to Student</b></h4>
+    </div>
+
+    <div class="modal-body mt-5 mb-5 animated bounce">
+      <div class="row">
+        <div class="col-md-6 offset-3 text-center">
+          <i style="color:#32CD32;" class="fas fa-check-circle fa-5x"></i>
+        </div>
+    </div>
+    <div class="row mt-3">
+      <div class="col-md-6 offset-3 text-center">
+        <p style="font-size: 24px; font-weight:400">Successfully Marked Paid!</p>
+      </div>
+    </div>
+    </div>
+</div>
+

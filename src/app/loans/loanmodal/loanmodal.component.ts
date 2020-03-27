@@ -38,8 +38,12 @@ import * as moment from 'moment';
             UserEmail: this.UserData.UserEmail,
             LoanStatus: "APPROVED",
             LoanIssued: data.LoanName,
-            AmountDue: data.LoanAmount,
-            NextPayment: moment().add(1, 'month').calendar().toString()
+            LoanAmount: data.LoanAmount,
+            RemainingBalance: data.LoanAmount,
+            AmountDue: 15,
+            NextPayment: moment().add(1, 'month').calendar().toString(),
+            APID: data.APID,
+            DriversLicense: data.DriversLicense
           }
           this.http.UpdateStudentDashboard(studentDashUpdate).subscribe( data => {
             let res:any = data

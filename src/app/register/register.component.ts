@@ -40,6 +40,15 @@ export class RegisterComponent implements OnInit {
   middleNameFormControl = new FormControl("", [
   ]);
 
+  APIDFormControl = new FormControl("", [
+    Validators.required
+  ]);
+
+  DriversLicenseFormControl = new FormControl("", [
+    Validators.required
+  ]);
+
+
 
   passwordFormControl = new FormControl("", [
     Validators.required,
@@ -54,6 +63,8 @@ export class RegisterComponent implements OnInit {
       MiddleName: this.middleNameFormControl.value,
       LastName: this.lastNameFormControl.value,
       UserEmail: this.emailFormControl.value,
+      APID: this.APIDFormControl.value,
+      DriversLicense: this.DriversLicenseFormControl.value,
       password: Md5.hashStr(`${this.passwordFormControl.value}`),
       isConfirmed: false,
       hash: "",
@@ -66,10 +77,15 @@ export class RegisterComponent implements OnInit {
       LastName: this.lastNameFormControl.value,
       LoanStatus: "",
       LoanIssued: "",
+      LoamAmount: 0,
       NextPayment: "",
       AmountDue: 0,
+      RemainingBalance: 0,
+      LenderPaid: false,
       isPaid: false,
-      isLate: false
+      isLate: false,
+      APID: this.APIDFormControl.value,
+      DriversLicense: this.DriversLicenseFormControl.value,
     }
     if(this.emailFormControl.value.indexOf("@msu.edu") == -1) {
       this.msuEmail = false;

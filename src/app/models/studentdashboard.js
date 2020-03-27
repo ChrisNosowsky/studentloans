@@ -8,10 +8,15 @@ var StudentDashboardSchema = new Schema({
     LastName: {type: String},      
     LoanStatus: { type: String },
     LoanIssued: {type: String},
+    LoanAmount: {type: Number},
     NextPayment: {type: String},
     AmountDue: {type: Number},
+    RemainingBalance: {type: Number},
+    LenderPaid: {type: Boolean},
     isPaid: {type: Boolean},
-    isLate: {type: Boolean}
+    isLate: {type: Boolean},
+    APID: {type: String},
+    DriversLicense: {type: String}
 
 },{ versionKey: false });  
 

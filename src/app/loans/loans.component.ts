@@ -4,6 +4,7 @@ import { CommonService } from '../common.service';
 import { UserService } from '../user.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {LoanModal} from './loanmodal/loanmodal.component'
+import {PaymentModal} from './payment-modal/payment-modal.component'
 @Component({
   selector: 'app-loans',
   templateUrl: './loans.component.html',
@@ -45,13 +46,27 @@ export class LoansComponent implements OnInit {
     this.UserData.Rate = rate,
     this.UserData.Transfer = transfer
     this.UserData.issued = issued
-    const modalRef = this.modalService.open(LoanModal);
-    modalRef.componentInstance.UserData = this.UserData;
-    modalRef.result.then((result) => {
-      if (result) {
-        console.log(result);
-      }
-    });
+    if (issued === 'false') {
+      const modalRef = this.modalService.open(LoanModal);
+      modalRef.componentInstance.UserData = this.UserData;
+      modalRef.result.then((result) => {
+        if (result) {
+          console.log(result);
+        }
+      });
+    } else {
+
+      const modalPay = this.modalService.open(PaymentModal);
+      modalPay.componentInstance.UserData = this.UserData;
+      modalPay.result.then((result) => {
+        if (result) {
+          console.log(result);
+        }
+      });
+    }
+
+
+
   }
 
 }

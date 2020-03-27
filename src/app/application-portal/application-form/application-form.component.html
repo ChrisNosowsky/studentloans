@@ -1,11 +1,10 @@
 <app-header></app-header>
 <section>
-<div class="container">
+<div *ngIf="!alreadyApplied" class="container">
   <div *ngIf = "submitted" class="row">
     <app-success></app-success>
   </div>
   <form *ngIf = "!submitted" [formGroup]="loanApplicationForm" novalidate>
-
     <div class="row justify-content-center" formGroupName="personalData">
       <div class="col-5">
         <div class="md-form input-group mb-2">
@@ -14,6 +13,24 @@
         </div>
       </div>
     </div>
+    <div class="row justify-content-center" formGroupName="personalData">
+      <div class="col-5">
+        <div class="md-form input-group mb-2">
+          
+          <input type="text" class="form-control mb-4" placeholder="Drivers License" formControlName="license">
+        </div>
+      </div>
+    </div>
+    <div class="row justify-content-center" formGroupName="personalData">
+      <div class="col-5">
+        <div class="md-form input-group mb-2">
+          
+          <input type="text" class="form-control mb-4" placeholder="APID" formControlName="apid">
+        </div>
+      </div>
+    </div>
+
+    
 
     <div class="row justify-content-center" formGroupName="loanData">
       <div class="col-5">
@@ -38,6 +55,15 @@
     </div>
     <br>
   </form>
+</div>
+
+<div *ngIf="alreadyApplied" class="container">
+  <div class="row mt-5">
+    <div class="col-md-12 text-center">
+      <h2>Already Applied for a Loan!</h2>
+    </div>
+    
+  </div>
 </div>
 
 </section>

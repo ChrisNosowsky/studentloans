@@ -6,6 +6,8 @@ var LoginSchema = new Schema({
     FirstName: { type: String },
     MiddleName: { type: String },
     LastName: { type: String },
+    APID: {type: String},
+    DriversLicense: {type: String},
     UserEmail: { type: String },
     password: {type: String},
     organization: {type: String},
