@@ -19,6 +19,7 @@ export class StudentDashboardComponent implements OnInit {
   LoanIssued = "" //date
   isPaid = ""
   isLate = ""
+  RemainingBalance = 0
 
   constructor(private http: CommonService, private user: UserService, private router: Router, private loginService: LoginService) { }
   ngOnInit() {
@@ -47,6 +48,7 @@ export class StudentDashboardComponent implements OnInit {
             this.NextPayment = data.NextPayment
           }
           this.AmountDue = data.AmountDue
+          this.RemainingBalance = data.RemainingBalance
           if(data.isPaid) {
             this.isPaid = "Paid"
           } else {
