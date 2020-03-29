@@ -169,7 +169,7 @@ app.post("/api/getStudentDashboard",function(req,res){
 
 app.post("/api/UpdateOpenAppToIssued",function(req,res){  
     if(req.body.LenderPaid) {
-        model.findOneAndUpdate({UserEmail: req.body.UserEmail}, {LenderPaid: req.body.LenderPaid},function(err,data){  
+        model.findOneAndUpdate({UserEmail: req.body.UserEmail}, {LenderPaid: req.body.LenderPaid, RemainingBalance: req.body.RemainingBalance},function(err,data){  
                     if(err){  
                         res.send(err);  
                     }  

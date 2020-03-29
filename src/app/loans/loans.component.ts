@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Directive, Input, SimpleChange } from '@angular/core';
 
 import { CommonService } from '../common.service';
 import { UserService } from '../user.service';
@@ -6,6 +6,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {LoanModal} from './loanmodal/loanmodal.component'
 import {PaymentModal} from './payment-modal/payment-modal.component'
 import {InfoModal} from './info/info.component'
+
 @Component({
   selector: 'app-loans',
   templateUrl: './loans.component.html',
@@ -27,6 +28,7 @@ export class LoansComponent implements OnInit {
     APID: "",
     DriversLicense: ""
   }
+  remaining : any
   ngOnInit() {  
     this.user.getData().subscribe(data => {
       this.organization = data.organization

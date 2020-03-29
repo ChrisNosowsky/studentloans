@@ -44,7 +44,8 @@ export class PaymentModal {
       data => {
         let studentDashUpdate = {
           UserEmail: this.UserData.UserEmail,
-          LenderPaid: true
+          LenderPaid: true,
+          RemainingBalance: this.UserData.LoanAmount
         }
         this.http.UpdateStudentDashboard(studentDashUpdate).subscribe( data => {
           let res:any = data
