@@ -5,6 +5,7 @@ import { UserService } from '../user.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {LoanModal} from './loanmodal/loanmodal.component'
 import {PaymentModal} from './payment-modal/payment-modal.component'
+import {InfoModal} from './info/info.component'
 @Component({
   selector: 'app-loans',
   templateUrl: './loans.component.html',
@@ -22,7 +23,9 @@ export class LoansComponent implements OnInit {
     LoanAmount: 0,
     Rate: 0,
     Transfer: "",
-    issued: ""
+    issued: "",
+    APID: "",
+    DriversLicense: ""
   }
   ngOnInit() {  
     this.user.getData().subscribe(data => {
@@ -38,14 +41,17 @@ export class LoansComponent implements OnInit {
 
   } 
 
-  openModal(email, first, last, loanamount, rate, transfer, issued) {
+  openModal(email, first, last, loanamount, rate, transfer, issued, APID, DriversLicense, info="") {
     this.UserData.UserEmail = email
     this.UserData.FirstName = first
     this.UserData.LastName = last
-    this.UserData.LoanAmount = loanamount,
+    this.UserData.LoanAmount = loanamount
     this.UserData.Rate = rate,
     this.UserData.Transfer = transfer
     this.UserData.issued = issued
+    this.UserData.APID = APID
+    this.UserData.DriversLicense = DriversLicense
+
     if (issued === 'false') {
       const modalRef = this.modalService.open(LoanModal);
       modalRef.componentInstance.UserData = this.UserData;
@@ -55,14 +61,27 @@ export class LoansComponent implements OnInit {
         }
       });
     } else {
+      if (info === 'info') {
+        const modalInfo = this.modalService.open(InfoModal);
+        modalInfo.componentInstance.UserData = this.UserData;
+        modalInfo.result.then((result) => {
+          if (result) {
+            console.log(result);
+          }
+        });
+      } else {
 
-      const modalPay = this.modalService.open(PaymentModal);
-      modalPay.componentInstance.UserData = this.UserData;
-      modalPay.result.then((result) => {
-        if (result) {
-          console.log(result);
-        }
-      });
+        const modalPay = this.modalService.open(PaymentModal);
+        modalPay.componentInstance.UserData = this.UserData;
+        modalPay.result.then((result) => {
+          if (result) {
+            console.log(result);
+          }
+        });
+
+      }
+
+
     }
 
 

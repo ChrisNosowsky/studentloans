@@ -1,0 +1,16 @@
+<div class="modal-content animated fadeIn faster">
+  <div class="modal-header primaryya">
+    <button type="button" class="close pull-right" aria-label="Close" (click)="closeModal()">
+      <span>×</span>
+    </button>
+    <h4 class="modal-title w-100" id="myModalLabel"><b>Student Information</b></h4>
+  </div>
+
+  <div class="modal-body">
+    <p>Loan Applicant - {{UserData.FirstName}} {{UserData.LastName}}</p>
+    <p>APID - {{UserData.APID}}</p>
+    <p>Drivers License - {{UserData.DriversLicense}}</p>
+  </div>
+</div>
+
+

@@ -36,20 +36,19 @@
               </div>
             </div>
             <div class="row">
-                <div class="col"> <button [disabled]="AmountFormControl.invalid || PaymentFormControl.invalid" type="submit" class="btn btn-primary" (click)="onPay()">Mark as Paid</button></div>
+                <div class="col"> <button [disabled]="AmountFormControl.invalid || PaymentFormControl.invalid" data-toggle="modal" data-target="#centralModalSuccess" type="submit" class="btn btn-primary" (click)="onPay()">Mark as Paid</button></div>
             </div>
         
         </form>
         </div>
   </div>
 
-
-  <div *ngIf="submitted" class="modal-content">
-    <div class="modal-header">
-      <button type="button" class="close pull-right" aria-label="Close" (click)="closeModalSuccess()">
-        <span>×</span>
-      </button>
+  <div *ngIf="submitted" class="modal-content animated fadeIn faster">
+    <div class="modal-header successya z-depth-1" >
       <h4 class="modal-title w-100" id="myModalLabel"><b>Confirm Payment to Student</b></h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="closeModalSuccess()">
+        <span style="color:#ffffff;">×</span>
+      </button>
     </div>
 
     <div class="modal-body mt-5 mb-5 animated bounce">

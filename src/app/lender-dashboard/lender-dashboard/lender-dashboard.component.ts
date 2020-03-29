@@ -37,6 +37,40 @@ export class LenderDashboardComponent implements OnInit {
   public chartHovered(e: any): void { }
 
 
+  public chartTypeDough: string = 'doughnut';
+
+  public chartDatasetsDough: Array<any> = [
+    { data: [1, 0], label: 'My First dataset' }
+  ];
+
+  public chartLabelsDough: Array<any> = ['Paid', ' Not Paid'];
+
+  public chartColorsDough: Array<any> = [
+    {
+      backgroundColor: ['#46BFBD', '#F7464A'],
+      hoverBackgroundColor: ['#5AD3D1', '#FF5A5E'],
+      borderWidth: 2,
+    }
+  ];
+
+  public chartOptionsDough: any = {
+    responsive: true
+  };
+  public chartClickedDough(e: any): void { }
+  public chartHoveredDough(e: any): void { }
+
+
+
+
+
+
+
+
+
+
+
+
+
   constructor(private user: UserService, private loanService: CommonService, private router: Router) { }
 
   loans: any;  
@@ -44,10 +78,12 @@ export class LenderDashboardComponent implements OnInit {
   email: string
   totalIssued = 0
   totalReview = 0
+  totalLoans = 0
   avgInterestIssued:any
   totalInterest = 0
   numberIssued = 0
   numberOpen = 0
+  numberRejected = 0
   ngOnInit() {   
     this.user.getData().subscribe(data => {
       if(data.status && data.role === 'LENDER') {
@@ -62,11 +98,14 @@ export class LenderDashboardComponent implements OnInit {
             if(this.loans[i].Issued === "false") {
               this.totalReview += this.loans[i].LoanAmount
               this.numberOpen += 1
-            } else {
+            } else if(this.loans[i].Issued === "true") {
               this.totalIssued += this.loans[i].LoanAmount
               this.totalInterest += this.loans[i].Rate
               this.numberIssued += 1
+            } else {
+              this.numberRejected += 1
             }
+            this.totalLoans += 1
           }
           this.avgInterestIssued = this.totalInterest/i
         })
@@ -89,6 +128,15 @@ export class LenderDashboardComponent implements OnInit {
 
 
 
+  }
+
+  getNumberIssued() {
+    const result = this.numberIssued/this.totalLoans * 100;
+    return result;
+  }
+  getNumberRejected() {
+    const result = this.numberRejected/this.totalLoans * 100;
+    return result;
   }
 
 }
