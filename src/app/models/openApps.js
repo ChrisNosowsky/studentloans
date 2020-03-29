@@ -9,6 +9,7 @@ var LoanAppSchema = new Schema({
     LastName: { type: String },
     PhoneNumber: {type: Number},
     LoanAmount: { type: Number },
+    RemainingBalance: {type: Number},
     Rate: { type: Number },
     PaymentMethod: { type: String },
     LoanHolder: { type: String },
