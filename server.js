@@ -192,7 +192,7 @@ app.post("/api/UpdateOpenAppToIssued",function(req,res){
 
 app.post("/api/UpdateStudentDashboard",function(req,res){  
     if(req.body.LenderPaid) {
-    modelStudent.findOneAndUpdate({UserEmail: req.body.UserEmail}, {LenderPaid: req.body.LenderPaid},function(err,data){  
+    modelStudent.findOneAndUpdate({UserEmail: req.body.UserEmail}, {LenderPaid: req.body.LenderPaid, RemainingBalance: req.body.RemainingBalance},function(err,data){  
                 if(err){  
                     res.send(err);  
                 }  

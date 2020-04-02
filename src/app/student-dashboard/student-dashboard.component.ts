@@ -47,7 +47,7 @@ export class StudentDashboardComponent implements OnInit {
           } else {
             this.NextPayment = data.NextPayment
           }
-          this.AmountDue = data.AmountDue
+          this.AmountDue = data.LoanAmount - (data.LoanAmount - data.RemainingBalance)
           this.RemainingBalance = data.RemainingBalance
           if(data.isPaid) {
             this.isPaid = "Paid"
