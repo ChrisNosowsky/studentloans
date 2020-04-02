@@ -14,23 +14,37 @@ import * as moment from 'moment';
     @Input() public UserData;
     dropdownVals = ['Yes', 'No']
     
-    loanForm: FormGroup
     constructor(public activeModal: NgbActiveModal, private http: CommonService, private user: UserService) {}
     ngOnInit() {
-      this.loanForm = new FormGroup({
-        'noHolds': new FormControl(null, Validators.required),
-        'isEnrolled': new FormControl(null, Validators.required),
-        'isTaxpayer': new FormControl(null, Validators.required),
-        'hasDefaulted': new FormControl(null, Validators.required),
-        'lenderNotes': new FormControl(null)
-      });
     }
+
+    noHolds = new FormControl("", [
+      Validators.required
+    ]);
+
+    isEnrolled = new FormControl("", [
+      Validators.required
+    ]);
+
+    isTaxpayer = new FormControl("", [
+      Validators.required
+    ]);
+
+    hasDefaulted = new FormControl("", [
+      Validators.required
+    ]);
+
+    lenderNotes = new FormControl("", [
+      Validators.required
+    ]);
  
     onSubmit() {
       
       let user = {
         UserEmail: this.UserData.UserEmail,
-        Issued: "true"
+        Issued: "true",
+        RemainingBalance: 0,
+        AdditonalNotes: this.lenderNotes.value
       }
       this.http.UpdateOpenAppToIssued(user).subscribe(
         data => {
@@ -43,7 +57,7 @@ import * as moment from 'moment';
             AmountDue: 15,
             NextPayment: moment().add(1, 'month').calendar().toString(),
             APID: data.APID,
-            DriversLicense: data.DriversLicense
+            DriversLicense: data.DriversLicense,
           }
           this.http.UpdateStudentDashboard(studentDashUpdate).subscribe( data => {
             let res:any = data
@@ -62,7 +76,9 @@ import * as moment from 'moment';
     onReject(){
       let user = {
         UserEmail: this.UserData.UserEmail,
-        Issued: ""
+        Issued: "",
+        RemainingBalance: 0,
+        AdditonalNotes: this.lenderNotes.value
       }
       this.http.UpdateOpenAppToIssued(user).subscribe(
         data => {
@@ -89,6 +105,5 @@ import * as moment from 'moment';
     closeModal() {
       this.activeModal.close();
     }
-
 
   }

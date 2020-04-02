@@ -169,7 +169,7 @@ app.post("/api/getStudentDashboard",function(req,res){
 
 app.post("/api/UpdateOpenAppToIssued",function(req,res){  
     if(req.body.LenderPaid) {
-        model.findOneAndUpdate({UserEmail: req.body.UserEmail}, {LenderPaid: req.body.LenderPaid, RemainingBalance: req.body.RemainingBalance},function(err,data){  
+        model.findOneAndUpdate({UserEmail: req.body.UserEmail}, {LenderPaid: req.body.LenderPaid, RemainingBalance: req.body.RemainingBalance, markedPaidBy: req.body.markedPaidBy},function(err,data){  
                     if(err){  
                         res.send(err);  
                     }  
@@ -177,8 +177,9 @@ app.post("/api/UpdateOpenAppToIssued",function(req,res){
                         res.send(data);  
                         }  
                 });
-        } else {
-            model.findOneAndUpdate({UserEmail: req.body.UserEmail}, {Issued: req.body.Issued},function(err,data){  
+        }      
+        else {
+            model.findOneAndUpdate({UserEmail: req.body.UserEmail}, {Issued: req.body.Issued, AdditonalNotes: req.body.AdditonalNotes},function(err,data){  
                 if(err){  
                     res.send(err);  
                 }  
@@ -199,7 +200,8 @@ app.post("/api/UpdateStudentDashboard",function(req,res){
                     res.send(data);  
                     }  
             }); 
-        } else {
+        } 
+        else {
             modelStudent.findOneAndUpdate({UserEmail: req.body.UserEmail}, 
                 {LoanStatus: req.body.LoanStatus, LoanIssued: req.body.LoanIssued, NextPayment: req.body.NextPayment, 
                     AmountDue: req.body.AmountDue, APID: req.body.APID, DriversLicense: req.body.DriversLicense, 

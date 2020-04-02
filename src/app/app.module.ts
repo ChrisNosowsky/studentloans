@@ -28,7 +28,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SuccessRegisterComponent } from './success-register/success-register.component';
 import { PaymentModal } from './loans/payment-modal/payment-modal.component';
 import { InfoModal } from './loans/info/info.component';
-
+import { StudentPaidModal } from './loans/student-paid-modal/student-paid-modal.component';
 
 
 const appRoutes: Routes = [
@@ -49,7 +49,8 @@ const appRoutes: Routes = [
   },
   {
     path:'apply',
-    component: ApplicationFormComponent
+    component: ApplicationFormComponent,
+    canActivate: [AuthGuard]
   },
   {
     path:'logout',
@@ -101,7 +102,8 @@ const appRoutes: Routes = [
     LoanModal,
     SuccessRegisterComponent,
     PaymentModal,
-    InfoModal
+    InfoModal,
+    StudentPaidModal
   ],
   imports: [
     BrowserModule,
@@ -118,7 +120,7 @@ const appRoutes: Routes = [
   ],
   providers: [CommonService, UserService, AuthGuard],
   bootstrap: [AppComponent],
-  entryComponents: [ LoanModal, PaymentModal, InfoModal ],
+  entryComponents: [ LoanModal, PaymentModal, InfoModal, StudentPaidModal ],
   schemas: [ NO_ERRORS_SCHEMA ]
 })
 export class AppModule { }

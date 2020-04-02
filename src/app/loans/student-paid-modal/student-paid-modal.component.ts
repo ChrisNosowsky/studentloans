@@ -4,20 +4,16 @@ import {FormControl, FormGroup, Validators, FormBuilder } from "@angular/forms";
 import {UserService} from '../../user.service';
 import {CommonService} from '../../common.service';
 @Component({
-  selector: 'app-payment-modal',
-  templateUrl: './payment-modal.component.html',
-  styleUrls: ['./payment-modal.component.scss']
+  selector: 'app-student-paid-modal',
+  templateUrl: './student-paid-modal.component.html',
+  styleUrls: ['./student-paid-modal.component.scss']
 })
-export class PaymentModal {
+export class StudentPaidModal implements OnInit {
   @Input() public UserData;
   @Output() passEntry: EventEmitter<any> = new EventEmitter();
-  
-  loanForm: FormGroup
+  constructor(public activeModal: NgbActiveModal, private http: CommonService, private user: UserService) {}
 
-  AmountFormControl = new FormControl("", [
-    Validators.required,
-  ]);
-  PaymentFormControl = new FormControl("", [
+  amountStudentPaid = new FormControl("", [
     Validators.required,
   ]);
   signedName = new FormControl("", [
@@ -25,32 +21,25 @@ export class PaymentModal {
   ]);
 
 
-  submitted = false
-  constructor(public activeModal: NgbActiveModal, private http: CommonService, private user: UserService) {}
+  submitted = false;
   ngOnInit() {
-
-    this.loanForm = new FormGroup({
-      'noHolds': new FormControl(null, Validators.required),
-      'isEnrolled': new FormControl(null, Validators.required),
-      'isTaxpayer': new FormControl(null, Validators.required),
-      'hasDefaulted': new FormControl(null, Validators.required),
-      'lenderNotes': new FormControl(null)
-    });
   }
 
+
   onPay() {
+    console.log(this.UserData.markedPaidBy)
     let user = {
       UserEmail: this.UserData.UserEmail,
       LenderPaid: true,
-      RemainingBalance: this.UserData.LoanAmount,
-      markedPaidBy: this.signedName.value
+      RemainingBalance: this.UserData.RemainingBalance - this.amountStudentPaid.value,
+      markedPaidBy: this.UserData.markedPaidBy
     }
     this.http.UpdateOpenAppToIssued(user).subscribe(
       data => {
         let studentDashUpdate = {
           UserEmail: this.UserData.UserEmail,
           LenderPaid: true,
-          RemainingBalance: this.UserData.LoanAmount
+          RemainingBalance: this.UserData.RemainingBalance - this.amountStudentPaid.value
         }
         this.http.UpdateStudentDashboard(studentDashUpdate).subscribe( data => {
           let res:any = data

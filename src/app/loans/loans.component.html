@@ -32,7 +32,7 @@
         {{loan.PaymentMethod}}
       </td>
       <td *ngIf="loan.Issued === 'false'">
-        <button type="button" class="btn btn-indigo btn-m m-0" (click)="openModal(loan.UserEmail, loan.FirstName, loan.LastName, loan.LoamAmount, loan.Rate, loan.PaymentMethod, loan.Issued, loan.APID, loan.DriversLicense)">Verify applicant information</button>
+        <button type="button" class="btn btn-indigo btn-m m-0" (click)="openModal(loan.UserEmail, loan.FirstName, loan.LastName, loan.LoamAmount, loan.RemainingBalance, loan.Rate, loan.PaymentMethod, loan.Issued, loan.APID, loan.DriversLicense)">Verify applicant information</button>
       </td>
     </tr>
 
@@ -54,6 +54,7 @@
           <th class="th-sm">Total Student Paid</th>
           <th class="th-sm">Information</th>
           <th class="th-sm">Payment Status</th>
+          <th class="th-sm">Student Paid</th>
         </tr>
       </thead>
       <tbody>
@@ -74,16 +75,19 @@
           {{loan.PaymentMethod}}
         </td>
         <td *ngIf="loan.Issued === 'true' && loan.RemainingBalance == 0">
-          <button type="button" class="btn btn-indigo btn-m m-0">>Mark as Paid Back</button>
+          <button style="font-size: 10px;" type="button" class="btn btn-indigo btn-m m-0">Mark as Paid Back</button>
         </td>
-        <td *ngIf="loan.Issued === 'true' && loan.RemainingBalance != 0">
+        <td *ngIf="loan.Issued === 'true' && loan.RemainingBalance != 0 && !loan.LenderPaid">
+          {{0 | currency}}
+        </td>
+        <td *ngIf="loan.Issued === 'true' && loan.RemainingBalance != 0 && loan.LenderPaid">
           {{loan.LoanAmount - loan.RemainingBalance | currency}}
         </td>
         <td *ngIf="loan.Issued === 'true'">
-          <button type="button" class="btn btn-indigo btn-m m-0" (click)="openModal(loan.UserEmail, loan.FirstName, loan.LastName, loan.LoanAmount, loan.Rate, loan.PaymentMethod, loan.Issued, loan.APID, loan.DriversLicense, 'info')">More</button>
+          <button type="button" class="btn btn-indigo btn-m m-0" (click)="openModal(loan.UserEmail, loan.FirstName, loan.LastName, loan.LoanAmount, loan.RemainingBalance, loan.Rate, loan.PaymentMethod, loan.Issued, loan.APID, loan.DriversLicense, loan.markedPaidBy, 'info')">More</button>
         </td>
         <td *ngIf="loan.Issued === 'true' && loan.LenderPaid === false">
-          <button type="button" class="btn btn-indigo btn-m m-0" (click)="openModal(loan.UserEmail, loan.FirstName, loan.LastName, loan.LoanAmount, loan.Rate, loan.PaymentMethod, loan.Issued, loan.APID, loan.DriversLicense)">Mark as Paid</button>
+          <button style="font-size: 10px;" type="button" class="btn btn-indigo btn-m m-0" (click)="openModal(loan.UserEmail, loan.FirstName, loan.LastName, loan.LoanAmount, loan.RemainingBalance, loan.Rate, loan.PaymentMethod, loan.Issued, loan.APID, loan.DriversLicense)">Mark Lender Paid</button>
         </td>
         <td *ngIf="loan.Issued === 'true' && loan.LenderPaid === true">
           <div class="row">
@@ -91,9 +95,12 @@
           <i style="color:#32CD32;" class="fas fa-check-circle fa-2x"></i>
           </div>
           <div class="col-md-9">
-          <p style="font-size: 20px;">Student Paid</p>
-        </div>
+          <p style="font-size: 20px;">Paid Student</p>
           </div>
+          </div>
+        </td>
+        <td *ngIf="loan.Issued === 'true'">
+          <button style="font-size: 10px;" type="button" class="btn btn-indigo btn-m m-0" (click)="openModal(loan.UserEmail, loan.FirstName, loan.LastName, loan.LoanAmount, loan.RemainingBalance, loan.Rate, loan.PaymentMethod, loan.Issued, loan.APID, loan.DriversLicense, loan.markedPaidBy, 'studentAmount')">Mark Student Paid</button>
         </td>
       </tr>
   

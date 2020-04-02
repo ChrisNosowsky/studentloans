@@ -25,12 +25,17 @@ h1 {
 }
 .btn-primary {
   background-color: #80a690 !important;
+  border: #80a690 !important;
   }
   
   .btn-primary:active:focus {
     background-color: #698876 !important;
+    border: #698876 !important;
   }
 
+  .btn-indigo, .btn-indigo:hover {
+    color: #ffffff;
+}
 .pull-right {
   margin-left: auto;
   margin-right: 0;

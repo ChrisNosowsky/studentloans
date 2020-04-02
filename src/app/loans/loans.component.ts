@@ -6,6 +6,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {LoanModal} from './loanmodal/loanmodal.component'
 import {PaymentModal} from './payment-modal/payment-modal.component'
 import {InfoModal} from './info/info.component'
+import {StudentPaidModal} from './student-paid-modal/student-paid-modal.component';
 
 @Component({
   selector: 'app-loans',
@@ -22,11 +23,13 @@ export class LoansComponent implements OnInit {
     FirstName: "",
     LastName: "",
     LoanAmount: 0,
+    RemainingBalance: 0,
     Rate: 0,
     Transfer: "",
     issued: "",
     APID: "",
-    DriversLicense: ""
+    DriversLicense: "",
+    markedPaidBy: ""
   }
   remaining : any
   ngOnInit() {  
@@ -43,7 +46,7 @@ export class LoansComponent implements OnInit {
 
   } 
 
-  openModal(email, first, last, loanamount, rate, transfer, issued, APID, DriversLicense, info="") {
+  openModal(email, first, last, loanamount, remaining=0, rate, transfer, issued, APID, DriversLicense, markedPaidBy="", info="") {
     this.UserData.UserEmail = email
     this.UserData.FirstName = first
     this.UserData.LastName = last
@@ -53,7 +56,8 @@ export class LoansComponent implements OnInit {
     this.UserData.issued = issued
     this.UserData.APID = APID
     this.UserData.DriversLicense = DriversLicense
-
+    this.UserData.markedPaidBy = markedPaidBy
+    this.UserData.RemainingBalance = remaining
     if (issued === 'false') {
       const modalRef = this.modalService.open(LoanModal);
       modalRef.componentInstance.UserData = this.UserData;
@@ -71,7 +75,18 @@ export class LoansComponent implements OnInit {
             console.log(result);
           }
         });
-      } else {
+      } 
+      else if(info === 'studentAmount') {
+        const modalStudentPaid = this.modalService.open(StudentPaidModal);
+        modalStudentPaid.componentInstance.UserData = this.UserData;
+        modalStudentPaid.result.then((result) => {
+          if (result) {
+            console.log(result);
+          }
+        });
+      }
+      
+      else {
 
         const modalPay = this.modalService.open(PaymentModal);
         modalPay.componentInstance.UserData = this.UserData;

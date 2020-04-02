@@ -99,7 +99,7 @@ export class LenderDashboardComponent implements OnInit {
               this.totalReview += this.loans[i].LoanAmount
               this.numberOpen += 1
             } else if(this.loans[i].Issued === "true") {
-              this.totalIssued += this.loans[i].LoanAmount
+              this.totalIssued += this.loans[i].LoanAmount - (this.loans[i].LoanAmount - this.loans[i].RemainingBalance)
               this.totalInterest += this.loans[i].Rate
               this.numberIssued += 1
             } else {

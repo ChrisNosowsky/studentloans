@@ -4,36 +4,23 @@
           <button type="button" class="close pull-right" aria-label="Close" (click)="closeModal()">
             <span>×</span>
           </button>
-          <h4 class="modal-title w-100" id="myModalLabel"><b>Confirm Payment to Student</b></h4>
+          <h4 class="modal-title w-100" id="myModalLabel"><b>Confirm Student Paid Amount</b></h4>
         </div>
     
         <div class="modal-body">
           <p>Loan Applicant - {{UserData.FirstName}} {{UserData.LastName}}</p>
           
-        <form [formGroup] = "loanForm">
+        <form>
             <div class="row">
                   <div class="col-md-5 mt-2">
-                    <label>Confirm Loan Paid Amount Of:</label>
+                    <label>Enter Amount Student Paid:</label>
                   </div>
-                  <div class="col-md-3 mt-2">
-                    <h4>{{UserData.LoanAmount | currency}}</h4>
+                  <div class="col-md-6 offset-1">
+                  <div class="md-form">
+                    <input type="number" id="inputMDEx" class="form-control" [formControl]="amountStudentPaid">
+                    <label for="inputMDEx">Amount</label>
                   </div>
-                  <div class="col-md-3 offset-1 custom-control custom-checkbox checkbox-lg">
-                    <input type="checkbox" class="custom-control-input" id="checkbox-1" [formControl]="AmountFormControl" required>
-                    <label class="custom-control-label" for="checkbox-1"></label>
-                  </div>
-            </div>
-            <div class="row">
-              <div class="col-md-5 mt-2">
-                <label>Confirm Transfer Type of:</label>
-              </div>
-              <div class="col-md-3 mt-2">
-                <h4>{{UserData.Transfer}}</h4>
-              </div>
-              <div class="col-md-3 offset-1 custom-control custom-checkbox checkbox-lg">
-                <input type="checkbox" class="custom-control-input" id="checkbox-2" [formControl]="PaymentFormControl" required>
-                <label class="custom-control-label" for="checkbox-2"></label>
-              </div>
+                </div>
             </div>
             <div class="row">
               <div class="col-md-5 mt-4">
@@ -48,7 +35,7 @@
               </div>
             </div>
             <div class="row">
-                <div class="col"> <button [disabled]="AmountFormControl.invalid || PaymentFormControl.invalid || signedName.invalid" data-toggle="modal" data-target="#centralModalSuccess" type="submit" class="btn btn-primary" (click)="onPay()">Mark as Paid</button></div>
+                <div class="col"> <button [disabled]="amountStudentPaid.invalid || signedName.invalid" data-toggle="modal" data-target="#centralModalSuccess" type="submit" class="btn btn-primary" (click)="onPay()">Mark as Paid</button></div>
             </div>
         
         </form>
@@ -57,7 +44,7 @@
 
   <div *ngIf="submitted" class="modal-content animated fadeIn faster">
     <div class="modal-header successya z-depth-1" >
-      <h4 class="modal-title w-100" id="myModalLabel"><b>Confirm Payment to Student</b></h4>
+      <h4 class="modal-title w-100" id="myModalLabel"><b>Confirm Student Paid Amount</b></h4>
       <button type="button" class="close pull-right" aria-label="Close" (click)="closeModalSuccess()">
         <span style="color:#ffffff;">×</span>
       </button>
@@ -71,7 +58,7 @@
     </div>
     <div class="row mt-3">
       <div class="col-md-6 offset-3 text-center">
-        <p style="font-size: 24px; font-weight:400">Successfully Marked Paid!</p>
+        <p style="font-size: 24px; font-weight:400">Successfully Marked Student Paid!</p>
       </div>
     </div>
     </div>

@@ -19,7 +19,9 @@ var LoanAppSchema = new Schema({
     LoanName: {type: String},
     APID: {type: String},
     DriversLicense: {type: String},
-    LenderPaid: {type: Boolean}  
+    LenderPaid: {type: Boolean},
+    AdditonalNotes: {type: String},
+    markedPaidBy: {type: String}  
 },{ versionKey: false });  
 
 
