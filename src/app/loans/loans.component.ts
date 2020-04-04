@@ -7,6 +7,7 @@ import {LoanModal} from './loanmodal/loanmodal.component'
 import {PaymentModal} from './payment-modal/payment-modal.component'
 import {InfoModal} from './info/info.component'
 import {StudentPaidModal} from './student-paid-modal/student-paid-modal.component';
+import { ExportService } from './../export.service';
 
 @Component({
   selector: 'app-loans',
@@ -14,7 +15,7 @@ import {StudentPaidModal} from './student-paid-modal/student-paid-modal.componen
   styleUrls: ['./loans.component.scss']
 })
 export class LoansComponent implements OnInit {
-  constructor( public modalService: NgbModal, private loanService: CommonService, private user: UserService) { }
+  constructor( public modalService: NgbModal, private loanService: CommonService, private user: UserService, private exportService: ExportService) { }
   loans: any;
   organization: string;
   myLoan:any;
@@ -103,6 +104,16 @@ export class LoansComponent implements OnInit {
 
 
 
+  }
+
+  export() {
+    var d = new Date();
+    var year = (d.getFullYear()).toString();
+    var month = (d.getMonth() + 1).toString();
+    var day = (d.getDay() + 1).toString();
+    var today = day + '/' + month + '/' + year;
+    var title = 'Lending Data ' + today;
+    this.exportService.exportExcel(this.loans, title);
   }
 
 }
