@@ -43,6 +43,7 @@ const modelLogin = require('./src/app/models/login')
 const modelStudent = require('./src/app/models/studentdashboard')
 const modelLender = require('./src/app/models/lenderdashboard')
 const modelLoans = require('./src/app/models/loans.js')
+const modelLog = require('./src/app/models/paymentLog');
 var host;
 app.post("/api/SaveUser",function(req,res){   
     var mod = new model(req.body); 
@@ -101,6 +102,17 @@ app.post("/api/SaveApp", function(req,res) {
 
 app.post("/api/CreateStudentDash", function(req,res) {
     var mod = new modelStudent(req.body)
+    mod.save(function(err,data){
+        if(err) {
+            res.send(err);
+        } else {
+            res.send(data);
+        }
+    });
+})
+
+app.post("/api/CreatePaymentLog", function(req,res) {
+    var mod = new modelLog(req.body)
     mod.save(function(err,data){
         if(err) {
             res.send(err);
@@ -179,7 +191,7 @@ app.post("/api/UpdateOpenAppToIssued",function(req,res){
                 });
         }      
         else {
-            model.findOneAndUpdate({UserEmail: req.body.UserEmail}, {Issued: req.body.Issued, AdditonalNotes: req.body.AdditonalNotes},function(err,data){  
+            model.findOneAndUpdate({UserEmail: req.body.UserEmail}, {Issued: req.body.Issued, AdditonalNotes: req.body.AdditonalNotes, AppReviewDate: req.body.AppReviewDate},function(err,data){  
                 if(err){  
                     res.send(err);  
                 }  
@@ -203,8 +215,8 @@ app.post("/api/UpdateStudentDashboard",function(req,res){
         } 
         else {
             modelStudent.findOneAndUpdate({UserEmail: req.body.UserEmail}, 
-                {LoanStatus: req.body.LoanStatus, LoanIssued: req.body.LoanIssued, NextPayment: req.body.NextPayment, 
-                    AmountDue: req.body.AmountDue, APID: req.body.APID, DriversLicense: req.body.DriversLicense, 
+                {LoanStatus: req.body.LoanStatus, LoanIssued: req.body.LoanIssued, PayoffDate: req.body.PayoffDate, 
+                    APID: req.body.APID, DriversLicense: req.body.DriversLicense, 
                     RemainingBalance: req.body.RemainingBalance},function(err,data){  
                 if(err){  
                     res.send(err);  
@@ -288,6 +300,47 @@ app.post("/api/sendmail", (req, res) => {
         callback(info);  
     } 
 
+    app.post("/api/sendAppMail", (req, res) => {
+        sendAppMail(req.body)
+    })
+
+    async function sendAppMail(user) {
+        var template = ""
+        let transporter = nodemailer.createTransport({
+            host: "smtp.gmail.com",
+            port: 587,
+            secure: false, // true for 465, false for other ports
+            auth: {
+            user: details.email,
+            pass: details.password
+            }
+        })
+        transporter.use('compile', hbs({
+            viewEngine: {
+                partialsDir:'./src/views/',
+                defaultLayout:""
+            },
+            viewPath: './src/views/',
+            extName:'.hbs'
+        }));
+        if(user.Issued === "true") {
+            template = 'approve'
+        } else {template = 'reject'}
+        let mailOptions = {
+            from: '<chrisnosowsky@gmail.com>', // sender address
+            to: user.UserEmail, // list of receivers
+            subject: "SmartiFi - Application Update!", // Subject line
+            template: template,
+            context: {
+                FirstName: user.FirstName,
+                LastName: user.LastName,
+                LoanName: user.LoanName,
+                LoanAmount: user.LoanAmount
+            }
+        }
+        // send mail with defined transport object
+        let info = await transporter.sendMail(mailOptions); 
+    }
 
 
     app.get('/verify',function(req,res){

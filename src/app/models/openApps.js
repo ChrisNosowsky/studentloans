@@ -14,6 +14,7 @@ var LoanAppSchema = new Schema({
     PaymentMethod: { type: String },
     LoanHolder: { type: String },
     Issued: { type: String },
+    AppReviewDate: {type: String},
     LoanHolder: {type: String},
     LoanID: {type: Number},
     LoanName: {type: String},

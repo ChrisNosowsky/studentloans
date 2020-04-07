@@ -4,35 +4,37 @@
   <div *ngIf = "submitted" class="row">
     <app-success></app-success>
   </div>
-  <form *ngIf = "!submitted" [formGroup]="loanApplicationForm" novalidate>
-    <div class="row justify-content-center" formGroupName="personalData">
+  <form *ngIf = "!submitted" novalidate>
+    <div class="row justify-content-center">
       <div class="col-5">
         <div class="md-form input-group mb-2">
           
-          <input type="text" class="form-control mb-4" placeholder="Phone Number" formControlName="mobile">
+          <input mdbInput mdbValidate type="text" id="form3" class="form-control mb-4" [formControl]="mobile" mask="000-000-0000">
+          <label for="form3">Phone Number</label>
+
         </div>
       </div>
     </div>
-    <div class="row justify-content-center" formGroupName="personalData">
+    <div class="row justify-content-center">
       <div class="col-5">
         <div class="md-form input-group mb-2">
           
-          <input type="text" class="form-control mb-4" placeholder="Drivers License" formControlName="license">
+          <input type="text" class="form-control mb-4" placeholder="Drivers License" [formControl]="license" required>
         </div>
       </div>
     </div>
-    <div class="row justify-content-center" formGroupName="personalData">
+    <div class="row justify-content-center">
       <div class="col-5">
         <div class="md-form input-group mb-2">
           
-          <input type="text" class="form-control mb-4" placeholder="APID" formControlName="apid">
+          <input type="text" class="form-control mb-4" placeholder="APID" [formControl]="apid" required>
         </div>
       </div>
     </div>
 
     
 
-    <div class="row justify-content-center" formGroupName="loanData">
+    <div class="row justify-content-center">
       <div class="col-5">
         <label class="mdb-main-label">Which loan are you applying for?</label>
         
@@ -42,16 +44,16 @@
           </select> 
       </div>
     </div>
-    <div class="row justify-content-center mt-4" formGroupName="loanData">
+    <div class="row justify-content-center mt-4">
       <div class="col-5">
         <label class="mdb-main-label">How do you want to be paid?</label>
-        <select class="browser-default  custom-select" formControlName="transferType">
+        <select class="browser-default  custom-select" [formControl]="transferType">
           <option *ngFor="let transfer of transferTypes" [value]="transfer">{{transfer}}</option>
         </select> 
       </div>
     </div>
     <div class="row justify-content-center mt-5">
-      <button type="submit" (click)="onSubmit(selectedLoan.value)" class="btn btn-primary">Submit Application</button>
+      <button type="button " [disabled]="apid.invalid || license.invalid || transferType.invalid || mobile.invalid" (click)="onSubmit(selectedLoan.value)" class="btn btn-primary">Submit Application</button>
     </div>
     <br>
   </form>

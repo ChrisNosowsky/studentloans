@@ -18,3 +18,21 @@
     -webkit-text-stroke-width: 0.5px;
     -webkit-text-stroke-color: black;
 }
+
+
+.loan-background {
+    background-color: rgba(0,0,0,0.6) !important;
+    background-image: url(../../img/tower-1.jpg);
+    background-blend-mode: color;
+    -ms-background-size: cover;
+    -o-background-size: cover;
+    -moz-background-size: cover;
+    -webkit-background-size: cover;
+    background-size: cover;
+}
+.card {
+    transition: transform .5s;
+}
+.card:hover {
+    transform: scale(1.02);
+}

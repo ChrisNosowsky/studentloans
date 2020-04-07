@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
+import {FormControl, FormGroup, Validators, FormBuilder } from "@angular/forms";
 import { LoanData, PersonalData, LoanApplication } from 'src/app/application-portal/models/loan-application';
 import { UserService } from '../../user.service';
 import { CommonService } from '../../common.service';
@@ -12,39 +12,20 @@ import { Router } from '@angular/router';
 })
 
 export class ApplicationFormComponent implements OnInit {
-  loanApplicationForm: FormGroup
 
-  constructor(private router: Router, private formBuilder: FormBuilder, private user: UserService, private http: CommonService) {
-    this.loanApplicationForm = this.createFormGroup();
-   }
-
-  createFormGroupFormBuilder(formBuilder: FormBuilder) {
-    return formBuilder.group({
-      personalData: formBuilder.group(new PersonalData()),
-      requestType: '',
-      text: '',
-    });
-
-  }
-
-  createFormGroup() {
-    return new FormGroup({
-      personalData: new FormGroup({
-        mobile: new FormControl(),
-        license: new FormControl(),
-        apid: new FormControl()
-      }),
-      loanData: new FormGroup({
-        loanAmt: new FormControl(),
-        transferType: new FormControl(),
-        issuer: new FormControl(),
-      }),
-      requestType: new FormControl(),
-      text: new FormControl()
-    });
-  }
-
-
+  constructor(private router: Router, private formBuilder: FormBuilder, private user: UserService, private http: CommonService) {}
+      mobile= new FormControl("", [
+        Validators.required])
+      license= new FormControl("", [
+        Validators.required])
+      apid= new FormControl("", [
+        Validators.required])
+      loanAmt= new FormControl("", [
+        Validators.required])
+      transferType= new FormControl("", [
+        Validators.required])
+      issuer= new FormControl("", [
+        Validators.required])
 
   transferTypes = ['Cash', 'Venmo', 'Direct Transfer To Your Bank Account']
   submitted = false
@@ -75,12 +56,6 @@ export class ApplicationFormComponent implements OnInit {
 
   }
 
-  revert() {
-    this.loanApplicationForm.reset();
-    this.loanApplicationForm.reset({ personalData: new PersonalData(), 
-    requestType: '', text: ''});
-    console.log('Form was cleared')
-  }
   onSubmit(selectedLoan) {
     let selectLoan = {
       LoanName: selectedLoan
@@ -90,16 +65,16 @@ export class ApplicationFormComponent implements OnInit {
         UserEmail: this.email,
         FirstName: this.FirstName,
         LastName: this.LastName,
-        PhoneNumber: result.personalData.mobile.valueOf(),
+        PhoneNumber: this.mobile.value,
         LoanAmount: data.LoanAmount,
         Rate: data.LoanInterest,
         LoanHolder: data.organization,
-        PaymentMethod: result.loanData.transferType.valueOf(),
+        PaymentMethod: this.transferType.value,
         Issued: false,
         LoanID: data.LoanID,
         LoanName: data.LoanName,
-        APID: result.personalData.apid.valueOf(),
-        DriversLicense: result.personalData.license.valueOf(),
+        APID: this.apid.value,
+        DriversLicense: this.license.value,
         LenderPaid: false
       }
       let UpdateStudentDash = {
@@ -107,11 +82,8 @@ export class ApplicationFormComponent implements OnInit {
         LoanStatus: "PENDING",
         LoanIssued: data.LoanName,
         LoanAmount: data.LoanAmount,
-        NextPayment: "",
-        RemainingBalance: 0,
-        AmountDue: 0,
-        APID: result.personalData.apid.valueOf(),
-        DriversLicense: result.personalData.license.valueOf()
+        PayoffDate: "",
+        RemainingBalance: 0
       }
       this.http.SaveApp(openAppsModel).subscribe(
         data => {
@@ -133,17 +105,6 @@ export class ApplicationFormComponent implements OnInit {
       )
     })
     this.submitted = true
-    const result: LoanApplication = Object.assign({},
-      this.loanApplicationForm.value);
-    result.personalData= Object.assign({},
-      result.personalData);
-    
-
-
-
-
-
-
   }
 
 }

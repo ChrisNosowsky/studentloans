@@ -14,8 +14,7 @@ export class StudentDashboardComponent implements OnInit {
   FirstName = ""
   LastName = ""
   LoanStatus = ""
-  AmountDue = 0
-  NextPayment = "" //date
+  PayoffDate = "" //date
   LoanIssued = "" //date
   isPaid = ""
   isLate = ""
@@ -42,12 +41,11 @@ export class StudentDashboardComponent implements OnInit {
           } else {
             this.LoanIssued = data.LoanIssued
           }
-          if(data.NextPayment === "") {
-            this.NextPayment = "No Next Payment"
+          if(data.PayoffDate === "") {
+            this.PayoffDate = "No Payment Due"
           } else {
-            this.NextPayment = data.NextPayment
+            this.PayoffDate = data.PayoffDate
           }
-          this.AmountDue = data.LoanAmount - (data.LoanAmount - data.RemainingBalance)
           this.RemainingBalance = data.RemainingBalance
           if(data.isPaid) {
             this.isPaid = "Paid"

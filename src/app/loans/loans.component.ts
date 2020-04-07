@@ -30,7 +30,10 @@ export class LoansComponent implements OnInit {
     issued: "",
     APID: "",
     DriversLicense: "",
-    markedPaidBy: ""
+    markedPaidBy: "",
+    LoanName: "",
+    LoanID: 0,
+    id: ""
   }
   remaining : any
   ngOnInit() {  
@@ -47,7 +50,7 @@ export class LoansComponent implements OnInit {
 
   } 
 
-  openModal(email, first, last, loanamount, remaining=0, rate, transfer, issued, APID, DriversLicense, markedPaidBy="", info="") {
+  openModal(email, first, last, loanamount, remaining=0, rate, transfer, issued, APID, DriversLicense, markedPaidBy="", info="", loanid=0, loanname="", id="") {
     this.UserData.UserEmail = email
     this.UserData.FirstName = first
     this.UserData.LastName = last
@@ -59,6 +62,10 @@ export class LoansComponent implements OnInit {
     this.UserData.DriversLicense = DriversLicense
     this.UserData.markedPaidBy = markedPaidBy
     this.UserData.RemainingBalance = remaining
+    this.UserData.LoanName = loanname
+    this.UserData.LoanID = loanid,
+    this.UserData.id = id
+
     if (issued === 'false') {
       const modalRef = this.modalService.open(LoanModal);
       modalRef.componentInstance.UserData = this.UserData;

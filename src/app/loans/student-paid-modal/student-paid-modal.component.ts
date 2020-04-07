@@ -41,6 +41,23 @@ export class StudentPaidModal implements OnInit {
           LenderPaid: true,
           RemainingBalance: this.UserData.RemainingBalance - this.amountStudentPaid.value
         }
+        this.user.getData().subscribe(
+          data => {
+            let paymentLog = {
+              DateConfirm: "",
+              SignedOffBy: this.signedName.value(),
+              organization: data.organization,
+              LoanID: this.UserData.LoanID,
+              LoanName: this.UserData.LoanName,
+              AppID: this.UserData.id //figure this out for objectID.
+            }
+            this.http.CreatePaymentLog(paymentLog).subscribe(data => {
+              let res:any = data
+            })
+          }
+        )
+
+
         this.http.UpdateStudentDashboard(studentDashUpdate).subscribe( data => {
           let res:any = data
         })

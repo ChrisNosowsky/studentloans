@@ -1,7 +1,7 @@
 <app-header></app-header>
 <section>
 <div class="container">
-  <button type="button" class="btn btn-indigo btn-m m-0" id="excelExport" (click)="export()">Export all data to Excel</button>
+  <button type="button" class="btn btn-indigo btn-m m-0 mb-2" id="excelExport" (click)="export()">Export all data to Excel</button>
 <h2>Open Applications</h2>
 
 
@@ -34,7 +34,7 @@
         {{loan.PaymentMethod}}
       </td>
       <td *ngIf="loan.Issued === 'false'">
-        <button type="button" class="btn btn-indigo btn-m m-0" (click)="openModal(loan.UserEmail, loan.FirstName, loan.LastName, loan.LoamAmount, loan.RemainingBalance, loan.Rate, loan.PaymentMethod, loan.Issued, loan.APID, loan.DriversLicense)">Verify applicant information</button>
+        <button type="button" class="btn btn-indigo btn-m m-0" (click)="openModal(loan.UserEmail, loan.FirstName, loan.LastName, loan.LoanAmount, loan.RemainingBalance, loan.Rate, loan.PaymentMethod, loan.Issued, loan.APID, loan.DriversLicense, '', '', 0, loan.LoanName)">Verify applicant information</button>
       </td>
     </tr>
 
@@ -102,7 +102,7 @@
           </div>
         </td>
         <td *ngIf="loan.Issued === 'true'">
-          <button style="font-size: 10px;" type="button" class="btn btn-indigo btn-m m-0" (click)="openModal(loan.UserEmail, loan.FirstName, loan.LastName, loan.LoanAmount, loan.RemainingBalance, loan.Rate, loan.PaymentMethod, loan.Issued, loan.APID, loan.DriversLicense, loan.markedPaidBy, 'studentAmount')">Mark Student Paid</button>
+          <button style="font-size: 10px;" type="button" class="btn btn-indigo btn-m m-0" (click)="openModal(loan.UserEmail, loan.FirstName, loan.LastName, loan.LoanAmount, loan.RemainingBalance, loan.Rate, loan.PaymentMethod, loan.Issued, loan.APID, loan.DriversLicense, loan.markedPaidBy, 'studentAmount', loan.LoanID, loan.LoanName, loan._id)">Mark Student Paid</button>
         </td>
       </tr>
   

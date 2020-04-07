@@ -5,7 +5,6 @@ import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { Routes, RouterModule } from '@angular/router';
-import { LoandashComponent } from './components/loandash/loandash.component';
 import { HeaderComponent } from './components/header/header.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoansComponent } from './loans/loans.component'
@@ -29,8 +28,9 @@ import { SuccessRegisterComponent } from './success-register/success-register.co
 import { PaymentModal } from './loans/payment-modal/payment-modal.component';
 import { InfoModal } from './loans/info/info.component';
 import { StudentPaidModal } from './loans/student-paid-modal/student-paid-modal.component';
+import { NgxMaskModule, IConfig } from 'ngx-mask'
 
-
+let options: Partial<IConfig> | (() => Partial<IConfig>);
 const appRoutes: Routes = [
   {
     path: '',
@@ -88,7 +88,6 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     HeaderComponent,
-    LoandashComponent,
     HomeComponent,
     LoansComponent,
     LenderDashboardComponent,
@@ -110,6 +109,7 @@ const appRoutes: Routes = [
     BrowserAnimationsModule,
     MDBBootstrapModule.forRoot(),
     RouterModule.forRoot(appRoutes),
+    NgxMaskModule.forRoot(options),
     ChartsModule,
     WavesModule,
     FormsModule,

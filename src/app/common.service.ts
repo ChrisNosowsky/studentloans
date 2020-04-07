@@ -25,6 +25,11 @@ export class CommonService {
     return this.http.post('http://localhost:8080/api/CreateStudentDash/', user)  
             .pipe(map((response: Response) =>response.json()))              
   }  
+
+  CreatePaymentLog(user){      
+    return this.http.post('http://localhost:8080/api/CreatePaymentLog/', user)  
+            .pipe(map((response: Response) =>response.json()))              
+  } 
   
   GetUser(org){       
     return this.http.post('http://localhost:8080/api/getUser/', org)  
@@ -66,6 +71,10 @@ export class CommonService {
   
   sendMail(user){      
     return this.http.post('http://localhost:8080/api/sendMail/', user)  
+            .pipe(map((response: Response) =>response.json()))              
+  }
+  sendAppMail(user){      
+    return this.http.post('http://localhost:8080/api/sendAppMail/', user)  
             .pipe(map((response: Response) =>response.json()))              
   }
   getEmail(user){       

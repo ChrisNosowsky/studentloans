@@ -44,8 +44,10 @@ import * as moment from 'moment';
         UserEmail: this.UserData.UserEmail,
         Issued: "true",
         RemainingBalance: 0,
+        AppReviewDate: moment().utcOffset(-4).format('MMMM Do YYYY, h:mm:ss a'),
         AdditonalNotes: this.lenderNotes.value
       }
+
       this.http.UpdateOpenAppToIssued(user).subscribe(
         data => {
           let studentDashUpdate = {
@@ -53,9 +55,8 @@ import * as moment from 'moment';
             LoanStatus: "APPROVED",
             LoanIssued: data.LoanName,
             LoanAmount: data.LoanAmount,
-            RemainingBalance: data.LoanAmount,
-            AmountDue: 15,
-            NextPayment: moment().add(1, 'month').calendar().toString(),
+            RemainingBalance: 0,
+            PayoffDate: "05/02/2020",
             APID: data.APID,
             DriversLicense: data.DriversLicense,
           }
@@ -67,10 +68,31 @@ import * as moment from 'moment';
           console.log("Error on Updating Open Application");
         },() => {
           console.log("Loan Application Approved");
+          let email = {
+            UserEmail: this.UserData.UserEmail,
+            FirstName: this.UserData.FirstName,
+            LastName: this.UserData.LastName,
+            Issued: "true",
+            LoanName: this.UserData.LoanName,
+            LoanAmount: this.UserData.LoanAmount
+          }
+          this.http.sendAppMail(email).subscribe(data => {
+            let res:any = data
+          },
+          err => {
+            console.log("Error on sending email");
+          },() => {
+            console.log('Email Sent Out!');
+            this.activeModal.close();
+            window.location.reload();
+  
+          })
           this.activeModal.close();
           window.location.reload();
 
         })  
+
+
     }
 
     onReject(){
@@ -78,6 +100,7 @@ import * as moment from 'moment';
         UserEmail: this.UserData.UserEmail,
         Issued: "",
         RemainingBalance: 0,
+        AppReviewDate: moment().utcOffset(-4).format('MMMM Do YYYY, h:mm:ss a'),
         AdditonalNotes: this.lenderNotes.value
       }
       this.http.UpdateOpenAppToIssued(user).subscribe(
@@ -86,8 +109,7 @@ import * as moment from 'moment';
             UserEmail: this.UserData.UserEmail,
             LoanStatus: "REJECTED",
             LoanIssued: data.LoanName,
-            AmountDue: 0,
-            NextPayment: ""
+            PayoffDate: ""
           }
           this.http.UpdateStudentDashboard(studentDashUpdate).subscribe( data => {
             let res:any = data
@@ -97,6 +119,25 @@ import * as moment from 'moment';
           console.log("Error on Updating Open Application");
         },() => {
           console.log('Loan application rejected');
+          let email = {
+            UserEmail: this.UserData.UserEmail,
+            FirstName: this.UserData.FirstName,
+            LastName: this.UserData.LastName,
+            Issued: "",
+            LoanName: this.UserData.LoanName,
+            LoanAmount: this.UserData.LoanAmount
+          }
+          this.http.sendAppMail(email).subscribe(data => {
+            let res:any = data
+          },
+          err => {
+            console.log("Error on sending email");
+          },() => {
+            console.log('Email Sent Out!');
+            this.activeModal.close();
+            window.location.reload();
+  
+          })
           this.activeModal.close();
           window.location.reload();
 
