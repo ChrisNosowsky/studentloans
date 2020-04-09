@@ -52,8 +52,30 @@
         </select> 
       </div>
     </div>
+
+    <div *ngIf="transferType.value == 'Direct Transfer To Your Bank Account'" class="row justify-content-center">
+      <div class="col-5">
+        <div class="md-form input-group mb-2">
+          
+          <input mdbInput mdbValidate type="text" id="form4" class="form-control mb-4" [formControl]="bankaccount">
+          <label for="form4">Bank Account Number</label>
+
+        </div>
+      </div>
+    </div>
+    <div *ngIf="transferType.value == 'Direct Transfer To Your Bank Account'" class="row justify-content-center">
+      <div class="col-5">
+        <div class="md-form input-group mb-2">
+          
+          <input mdbInput mdbValidate type="text" id="form5" class="form-control mb-4" [formControl]="routing" mask="000000000">
+          <label for="form5">Routing Number</label>
+
+        </div>
+      </div>
+    </div>
     <div class="row justify-content-center mt-5">
-      <button type="button " [disabled]="apid.invalid || license.invalid || transferType.invalid || mobile.invalid" (click)="onSubmit(selectedLoan.value)" class="btn btn-primary">Submit Application</button>
+      <button type="button " [disabled]="apid.invalid || license.invalid || transferType.invalid || mobile.invalid || (routing.invalid && transferType.value == 'Direct Transfer To Your Bank Account') || (transferType.value == 'Direct Transfer To Your Bank Account' && bankaccount.invalid)"
+       (click)="onSubmit(selectedLoan.value)" class="btn btn-primary">Submit Application</button>
     </div>
     <br>
   </form>

@@ -8,7 +8,7 @@
 <div class="container mt-3">
   <div class="row">
     <div class="col-md-3">
-      <div style="height: 10rem;" class="card">
+      <div style="height: 10rem;" class="card hoverable">
         <div class="card-header">
           Loan Status
         </div>
@@ -24,7 +24,7 @@
 
     </div>
     <div class="col-md-3">
-      <div style="height: 10rem;" class="card">
+      <div style="height: 10rem;" class="card hoverable">
         <div *ngIf="LoanStatus==='PENDING'" class="card-header">
           Loan on Application
         </div>
@@ -44,7 +44,7 @@
       </div>
     </div>
     <div class="col-md-3">
-      <div style="height: 10rem;" class="card">
+      <div style="height: 10rem;" class="card hoverable">
         <div class="card-header">
           Remaining Balance
         </div>
@@ -59,14 +59,14 @@
 <div *ngIf="LoanStatus==='APPROVED'" class="container">
   <p><b>Pay Off Date:</b> {{PayoffDate}}</p>
   <!-- <p><b>Payment Status:</b> {{isPaid}}</p> -->
-  <p class="lead"><a href="https://commerce.cashnet.com/cashneti/selfserve/BrowseCatalog.aspx" target="_blank"><button class="btn btn-primary">Pay Now</button></a></p>
+  <p class="lead"><a href="http://asmsu.msu.edu/home/services/loans/" target="_blank"><button class="btn btn-primary">Pay Now</button></a></p>
 </div>
 
 <div class="container gap">
   <h3>Learn More</h3>
   <div class="row">
   <div class="col-md-4 mt-3">
-    <div class="card loan-background hoverable" style="width: 18rem;">
+    <div class="card loan-background hoverable expand" style="width: 18rem;">
       <div class="card-body">
         <h5 class="card-title text-white">ASMSU Student Loan</h5>
         <p class="card-text">...</p>

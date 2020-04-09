@@ -8,6 +8,10 @@ var paymentLogSchema = new Schema({
     organization: {type: String},
     LoanID: {type: Number},
     LoanName:  {type: String},
+    AmountStudentPaid: {type: Number},
+    CumulativeAmountPaid: {type: Number},
+    StudentFirstName: {type: String},
+    StudentLastName: {type: String},
     AppID: {type: String}
 },{ versionKey: false });  
 

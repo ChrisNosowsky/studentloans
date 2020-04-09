@@ -4,7 +4,7 @@ import { LoanData, PersonalData, LoanApplication } from 'src/app/application-por
 import { UserService } from '../../user.service';
 import { CommonService } from '../../common.service';
 import { Router } from '@angular/router';
-
+import * as moment from 'moment';
 @Component({
   selector: 'app-application-form',
   templateUrl: './application-form.component.html',
@@ -26,8 +26,13 @@ export class ApplicationFormComponent implements OnInit {
         Validators.required])
       issuer= new FormControl("", [
         Validators.required])
+      bankaccount= new FormControl("", [
+        Validators.required,
+      Validators.minLength(4)])
+      routing= new FormControl("", [
+        Validators.required])
 
-  transferTypes = ['Cash', 'Venmo', 'Direct Transfer To Your Bank Account']
+  transferTypes = ['Cash', 'Direct Transfer To Your Bank Account']
   submitted = false
   loans: any
   FirstName: string
@@ -75,7 +80,10 @@ export class ApplicationFormComponent implements OnInit {
         LoanName: data.LoanName,
         APID: this.apid.value,
         DriversLicense: this.license.value,
-        LenderPaid: false
+        LenderPaid: false,
+        AppCreateDate: moment().utcOffset(-4).format('MMMM Do YYYY'),
+        BankAccount: this.bankaccount.value,
+        RoutingNumber: this.routing.value
       }
       let UpdateStudentDash = {
         UserEmail: this.email,

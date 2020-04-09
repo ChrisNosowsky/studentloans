@@ -3,6 +3,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import {FormControl, FormGroup, Validators, FormBuilder } from "@angular/forms";
 import {UserService} from '../../user.service';
 import {CommonService} from '../../common.service';
+import * as moment from 'moment';
 @Component({
   selector: 'app-student-paid-modal',
   templateUrl: './student-paid-modal.component.html',
@@ -44,11 +45,15 @@ export class StudentPaidModal implements OnInit {
         this.user.getData().subscribe(
           data => {
             let paymentLog = {
-              DateConfirm: "",
-              SignedOffBy: this.signedName.value(),
+              DateConfirm: moment().utcOffset(-4).format('MMMM Do YYYY, h:mm:ss a'),
+              SignedOffBy: this.signedName.value,
               organization: data.organization,
               LoanID: this.UserData.LoanID,
               LoanName: this.UserData.LoanName,
+              AmountStudentPaid: this.amountStudentPaid.value,
+              CumulativeAmountPaid: this.UserData.LoanAmount + this.amountStudentPaid.value - this.UserData.RemainingBalance,
+              StudentFirstName: this.UserData.FirstName,
+              StudentLastName: this.UserData.LastName,
               AppID: this.UserData.id //figure this out for objectID.
             }
             this.http.CreatePaymentLog(paymentLog).subscribe(data => {

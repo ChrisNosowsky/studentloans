@@ -30,9 +30,9 @@
     -webkit-background-size: cover;
     background-size: cover;
 }
-.card {
+.expand {
     transition: transform .5s;
 }
-.card:hover {
+.expand:hover {
     transform: scale(1.02);
 }

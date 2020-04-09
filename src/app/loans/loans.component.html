@@ -31,7 +31,8 @@
         {{loan.Rate | percent: '1.2-5'}}
       </td>
       <td *ngIf="loan.Issued === 'false'">
-        {{loan.PaymentMethod}}
+        <span *ngIf="loan.PaymentMethod === 'Direct Transfer To Your Bank Account'">Direct Deposit</span>
+        <span *ngIf="loan.PaymentMethod !== 'Direct Transfer To Your Bank Account'">{{loan.PaymentMethod}}</span>
       </td>
       <td *ngIf="loan.Issued === 'false'">
         <button type="button" class="btn btn-indigo btn-m m-0" (click)="openModal(loan.UserEmail, loan.FirstName, loan.LastName, loan.LoanAmount, loan.RemainingBalance, loan.Rate, loan.PaymentMethod, loan.Issued, loan.APID, loan.DriversLicense, '', '', 0, loan.LoanName)">Verify applicant information</button>
@@ -73,8 +74,10 @@
         <td *ngIf="loan.Issued === 'true'">
           {{loan.Rate | percent: '1.2-5'}}
         </td>
-        <td *ngIf="loan.Issued === 'true'">
-          {{loan.PaymentMethod}}
+        <td style="width: 100px !important;" *ngIf="loan.Issued === 'true'">
+          <span *ngIf="loan.PaymentMethod === 'Direct Transfer To Your Bank Account'">Direct Deposit</span>
+          <span *ngIf="loan.PaymentMethod !== 'Direct Transfer To Your Bank Account'">{{loan.PaymentMethod}}</span>
+          
         </td>
         <td *ngIf="loan.Issued === 'true' && loan.RemainingBalance == 0">
           <button style="font-size: 10px;" type="button" class="btn btn-indigo btn-m m-0">Mark as Paid Back</button>

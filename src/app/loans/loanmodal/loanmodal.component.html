@@ -51,7 +51,7 @@
             <div class="row">
                 <div class="col"><button type="button" class="btn btn-danger" style="height: 4rem;"(click)="onReject()">Deny Application</button></div>
                 <div class="col"> <button [disabled]="isTaxpayer.invalid || isTaxpayer.value == '2' || noHolds.invalid || noHolds.value == '1'
-                    || hasDefaulted.invalid || hasDefaulted == '1' || isEnrolled.invalid || isEnrolled == '2'" type="submit" class="btn btn-primary" style="height: 4rem;" (click)="onSubmit()">Approve Application</button></div>
+                    || hasDefaulted.invalid || hasDefaulted.value == '1' || isEnrolled.invalid || isEnrolled.value == '2'" type="submit" class="btn btn-primary" style="height: 4rem;" (click)="onSubmit()">Approve Application</button></div>
         
             </div>
         

@@ -22,7 +22,10 @@ var LoanAppSchema = new Schema({
     DriversLicense: {type: String},
     LenderPaid: {type: Boolean},
     AdditonalNotes: {type: String},
-    markedPaidBy: {type: String}  
+    markedPaidBy: {type: String},
+    AppCreateDate: {type: String},
+    BankAccount: {type: Number},
+    RoutingNumber: {type: Number}
 },{ versionKey: false });  
 
 
