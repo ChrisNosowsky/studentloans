@@ -57,7 +57,7 @@
     "saas": "^1.0.0",
     "ts-md5": "^1.2.7",
     "web-animations-js": "^2.3.2",
-    "xlsx": "^0.15.6",
+    "xlsx": "^0.17.0",
     "zone.js": "^0.8.29"
   },
   "devDependencies": {
