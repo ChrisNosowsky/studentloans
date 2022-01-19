@@ -83,7 +83,7 @@
     "karma-jasmine": "~2.0.1",
     "karma-jasmine-html-reporter": "^1.5.2",
     "ng-bootstrap": "^1.6.3",
-    "nodemailer": "^6.4.16",
+    "nodemailer": "^6.6.1",
     "protractor": "^5.4.3",
     "ts-node": "~7.0.1",
     "tslib": "^1.10.0",
