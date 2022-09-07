@@ -47,7 +47,7 @@
     "jquery": "^3.5.0",
     "mdbootstrap": "^4.15.0",
     "moment": "^2.29.4",
-    "moment-timezone": "^0.5.28",
+    "moment-timezone": "^0.5.35",
     "mongoose": "^5.9.1",
     "ng2-charts": "^2.3.0",
     "ngx-mask": "^8.2.0",
